@@ -1,0 +1,22 @@
+{
+  "name": "social-links",
+  "version": "0.0.0",
+  "description": "Validate & sanitize social links",
+  "main": "lib/main.js",
+  "types": "lib/main.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "start": "nodemon --ignore './lib' -e ts,json --exec 'npm run build && true'",
+    "build": "tsc",
+    "prepare": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  }
+}
