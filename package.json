@@ -11,12 +11,16 @@
     "start": "nodemon --ignore './lib' -e ts,json --exec 'npm run build && true'",
     "build": "tsc",
     "prepare": "npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --no-cache ./*",
+    "watch": "jest --no-cache --watch ./*"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^26.0.4",
+    "jest": "^26.1.0",
+    "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
   }
 }

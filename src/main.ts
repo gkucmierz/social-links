@@ -17,4 +17,14 @@ const socialsDesktop = {
   patreon: '(www.)?patreon.com/{PROFILE_ID}',
 };
 
-console.log(socialsDesktop);
+// console.log(socialsDesktop);
+
+export class SocialLinks {
+  constructor() {
+
+  }
+
+  hello() {
+    return 'world';
+  }
+}
