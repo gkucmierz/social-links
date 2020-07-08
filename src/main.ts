@@ -1,9 +1,13 @@
 
+interface Profile {
+  pattern: string;
+}
+
 const socialsMobile = {
+  linkedin: 'linkedin.com/mwlite/in/{PROFILE_ID}',
+  facebook: 'm.facebook.com/{PROFILE_ID}',
   youtube: 'm.youtube/c/{PROFILE_ID}',
   twitch: 'm.twitch.tv/{PROFILE_ID}',
-  facebook: 'm.facebook.com/{PROFILE_ID}',
-  linkedin: 'linkedin.com/mwlite/in/{PROFILE_ID}',
 };
 
 const socialsDesktop = {
@@ -17,14 +21,31 @@ const socialsDesktop = {
   patreon: '(www.)?patreon.com/{PROFILE_ID}',
 };
 
-// console.log(socialsDesktop);
+const escapeRegex = (string: string): string => {
+  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+};
 
 export class SocialLinks {
-  constructor() {
+  static DESKTOP = 0;
+  static MOBILE = 1;
+
+  constructor(usePredefinedProfiles = true) {
 
   }
 
-  hello() {
-    return 'world';
+  addProfile(profile: Profile): void {
+
+  }
+
+  isValid(profileName: string, link: string): boolean {
+    return true;
+  }
+
+  sanitize(profileName: string, link: string): string {
+    return 'gkucmierz';
+  }
+
+  getLink(profileName: string, id: string): string {
+    return '';
   }
 }
