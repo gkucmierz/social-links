@@ -10,15 +10,15 @@ describe('SocialLinks', () => {
 
   describe('constants', () => {
     it('should be defined DESKTOP', () => {
-      expect(SocialLinks.DESKTOP).toBeDefined();
+      expect(SocialLinks.TYPE_DESKTOP).toBeDefined();
     });
 
     it('should be defined MOBILE', () => {
-      expect(SocialLinks.MOBILE).toBeDefined();
+      expect(SocialLinks.TYPE_MOBILE).toBeDefined();
     });
 
     it('should be distnict', () => {
-      expect(SocialLinks.MOBILE).not.toEqual(SocialLinks.DESKTOP);
+      expect(SocialLinks.TYPE_MOBILE).not.toEqual(SocialLinks.TYPE_DESKTOP);
     });
   });
 
@@ -52,43 +52,43 @@ describe('SocialLinks', () => {
     });
   });
 
-  describe('sanitize', () => {
+  describe('getProfileId', () => {
     it('should work with http', () => {
-      expect(sl.sanitize('linkedin', 'http://www.linkedin.com/in/gkucmierz')).toBe('gkucmierz');
+      expect(sl.getProfileId('linkedin', 'http://www.linkedin.com/in/gkucmierz')).toBe('gkucmierz');
     });
 
     it('should work with https', () => {
-      expect(sl.sanitize('linkedin', 'https://www.linkedin.com/in/gkucmierz')).toBe('gkucmierz');
+      expect(sl.getProfileId('linkedin', 'https://www.linkedin.com/in/gkucmierz')).toBe('gkucmierz');
     });
 
     it('should work with http, no-www', () => {
-      expect(sl.sanitize('linkedin', 'http://linkedin.com/in/gkucmierz')).toBe('gkucmierz');
+      expect(sl.getProfileId('linkedin', 'http://linkedin.com/in/gkucmierz')).toBe('gkucmierz');
     });
 
     it('should work with https, no-www', () => {
-      expect(sl.sanitize('linkedin', 'https://linkedin.com/in/gkucmierz')).toBe('gkucmierz');
+      expect(sl.getProfileId('linkedin', 'https://linkedin.com/in/gkucmierz')).toBe('gkucmierz');
     });
 
     it('should work with no-protocol', () => {
-      expect(sl.sanitize('linkedin', 'www.linkedin.com/in/gkucmierz')).toBe('gkucmierz');
+      expect(sl.getProfileId('linkedin', 'www.linkedin.com/in/gkucmierz')).toBe('gkucmierz');
     });
 
     it('should work with only id', () => {
-      expect(sl.sanitize('linkedin', 'gkucmierz')).toBe('gkucmierz');
+      expect(sl.getProfileId('linkedin', 'gkucmierz')).toBe('gkucmierz');
     });
   });
 
-  xdescribe('getLink', () => {
-    it('should create default DESKTOP link', () => {
+  describe('getLink', () => {
+    it('should create default TYPE_DESKTOP link', () => {
       expect(sl.getLink('linkedin', 'gkucmierz')).toBe('https://linkedin.com/in/gkucmierz');
     });
 
-    it('should create DESKTOP link', () => {
-      expect(sl.getLink('linkedin', 'gkucmierz')).toBe('https://linkedin.com/in/gkucmierz');
+    it('should create TYPE_DESKTOP link', () => {
+      expect(sl.getLink('linkedin', 'gkucmierz', SocialLinks.TYPE_DESKTOP)).toBe('https://linkedin.com/in/gkucmierz');
     });
 
-    it('should create MOBILE link', () => {
-      expect(sl.getLink('linkedin', 'gkucmierz')).toBe('https://linkedin.com/mwlite/in/gkucmierz');
+    it('should create TYPE_MOBILE link', () => {
+      expect(sl.getLink('linkedin', 'gkucmierz', SocialLinks.TYPE_MOBILE)).toBe('https://linkedin.com/mwlite/in/gkucmierz');
     });
   });
 

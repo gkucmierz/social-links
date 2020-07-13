@@ -1,51 +1,169 @@
 
-interface Profile {
-  pattern: string;
+interface ProfileMatch {
+  match: string;
+  id: number;
+  type?: number;
 }
-
-const socialsMobile = {
-  linkedin: 'linkedin.com/mwlite/in/{PROFILE_ID}',
-  facebook: 'm.facebook.com/{PROFILE_ID}',
-  youtube: 'm.youtube/c/{PROFILE_ID}',
-  twitch: 'm.twitch.tv/{PROFILE_ID}',
-};
-
-const socialsDesktop = {
-  linkedin: '(www.)?linkedin.com/in/{PROFILE_ID}',
-  twitter: '(www.)?twitter.com/{PROFILE_ID}',
-  facebook: '(www.)?facebook.com/{PROFILE_ID}',
-  youtube: '(www.)youtube.com/channel/{PROFILE_ID}',
-  twitch: '(www.)?twitch.tv/{PROFILE_ID}',
-  discord: 'link',
-  instagram: '(www.)?instagram.com/{PROFILE_ID}',
-  patreon: '(www.)?patreon.com/{PROFILE_ID}',
-};
 
 const escapeRegex = (string: string): string => {
   return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 };
 
+const profiles = new Map();
+const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
+
+const createRegexp = (match: string): RegExp => {
+  const str = match.replace('{PROFILE_ID}', `${PROFILE_ID}`);
+  const regexp = new RegExp(['^', str, '$'].join(''));
+  return regexp;
+};
+
+const findIndex = (matches: ProfileMatch[], link: string): number => {
+  return matches.findIndex(({ match }) => createRegexp(match).test(link));
+};
+
 export class SocialLinks {
-  static DESKTOP = 0;
-  static MOBILE = 1;
+  static TYPE_DESKTOP = 0;
+  static TYPE_MOBILE = 1;
 
   constructor(usePredefinedProfiles = true) {
-
+    if (usePredefinedProfiles) {
+      PREDEFINED_PROFILES.map(({ name, matches }) => profiles.set(name, matches));
+    }
   }
 
-  addProfile(profile: Profile): void {
-
-  }
-
-  isValid(profileName: string, link: string): boolean {
+  addProfile(profileName: string, profileMatches: ProfileMatch[]): boolean {
+    if (this.hasProfile(profileName)) return false;
+    profiles.set(profileName, profileMatches);
     return true;
   }
 
-  sanitize(profileName: string, link: string): string {
-    return 'gkucmierz';
+  cleanProfiles(): void {
+    profiles.clear();
   }
 
-  getLink(profileName: string, id: string): string {
-    return '';
+  isValid(profileName: string, link: string): boolean {
+    if (!this.hasProfile(profileName)) return false;
+    const matches = profiles.get(profileName);
+    return findIndex(matches, link) !== -1;
+  }
+
+  getProfileId(profileName: string, link: string): string {
+    if (!this.hasProfile(profileName)) throw new Error(`There is no profile ${profileName} defined`);
+    const matches = profiles.get(profileName);
+    const idx = findIndex(matches, link);
+    if (idx === -1) throw new Error(`Link has not matched with profile ${profileName}`);
+    return (link.match(createRegexp(matches[idx].match)) || [])[matches[idx].id];
+  }
+
+  getLink(profileName: string, id: string, type = SocialLinks.TYPE_DESKTOP): string {
+    if (!this.hasProfile(profileName)) throw new Error(`There is no profile ${profileName} defined`);
+    const matches = profiles.get(profileName);
+    const idx = matches.findIndex((match: ProfileMatch) => match.type === type);
+    if (idx === -1) throw new Error(`There is no pattern for profile ${profileName}`);
+    return matches[idx].pattern.replace('{PROFILE_ID}', `${id}`);
+  }
+
+  sanitize(profileName: string, link: string): string {
+    const profileId = this.getProfileId(profileName, link);
+    const matches = profiles.get(profileName);
+    const idx = findIndex(matches, link);
+    const type = matches[idx].type || SocialLinks.TYPE_DESKTOP;
+    return this.getLink(profileName, profileId, type);
+  }
+
+  hasProfile(profileName: string): boolean {
+    return profiles.has(profileName);
   }
 }
+
+const PREDEFINED_PROFILES = [
+  { name: 'linkedin',
+    matches: [
+      {
+        match: '(https?://)?(www.)?linkedin.com/in/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://linkedin.com/in/{PROFILE_ID}'
+      },
+      {
+        match: '(https?://)?(www.)?linkedin.com/mwlite/in/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        pattern: 'https://linkedin.com/mwlite/in/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+  { name: 'twitter',
+    matches: [
+      {
+        match: '(https?://)?(www.)?twitter.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://twitter.com/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+  { name: 'facebook',
+    matches: [
+      {
+        match: '(https?://)?(www.)?facebook.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://facebook.com/{PROFILE_ID}'
+      },
+      {
+        match: '(https?://)?m.facebook.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        pattern: 'https://m.facebook.com/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+  { name: 'youtube',
+    matches: [
+      {
+        match: '(https?://)?(www.)youtube.com/channel/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://youtube.com/{PROFILE_ID}'
+      },
+      {
+        match: '(https?://)?m.youtube/c/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        pattern: 'https://m.youtube/c/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+  { name: 'twitch',
+    matches: [
+      {
+        match: '(https?://)?(www.)?twitch.tv/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://twitch.tv/{PROFILE_ID}'
+      },
+      {
+        match: '(https?://)?m.twitch.tv/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        pattern: 'https://m.twitch.tv/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+  { name: 'discord',
+    matches: [
+      {
+        match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://discord.com/channels/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+  { name: 'instagram',
+    matches: [
+      {
+        match: '(https?://)?(www.)?instagram.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://instagram.com/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+  { name: 'patreon',
+    matches: [
+      {
+        match: '(https?://)?(www.)?patreon.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        pattern: 'https://patreon.com/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', id: 1 },
+    ]
+  },
+];

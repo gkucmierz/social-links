@@ -8,7 +8,7 @@
     "lib/**/*"
   ],
   "scripts": {
-    "start": "nodemon --ignore './lib' -e ts,json --exec 'npm run build && true'",
+    "start": "nodemon --ignore './lib' -e ts,json --exec 'npm run build && npm run test && true'",
     "build": "tsc",
     "prepare": "npm run build",
     "test": "jest --no-cache ./*",
