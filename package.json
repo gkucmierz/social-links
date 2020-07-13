@@ -15,6 +15,13 @@
     "test": "jest --no-cache ./*",
     "test:watch": "jest --no-cache --watch ./*"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkucmierz/social-links.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "keywords": [
     "social",
     "links",
@@ -37,6 +44,10 @@
   ],
   "author": "Grzegorz Kucmierz",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gkucmierz/social-links/issues"
+  },
+  "homepage": "https://github.com/gkucmierz/social-links#readme",
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "jest": "^26.1.0",
