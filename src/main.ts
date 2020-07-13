@@ -66,12 +66,12 @@ export class SocialLinks {
     return matches[idx].pattern.replace('{PROFILE_ID}', `${id}`);
   }
 
-  sanitize(profileName: string, link: string): string {
+  sanitize(profileName: string, link: string, type = Infinity): string {
     const profileId = this.getProfileId(profileName, link);
     const matches = profiles.get(profileName);
     const idx = findIndex(matches, link);
-    const type = matches[idx].type || TYPE_DESKTOP;
-    return this.getLink(profileName, profileId, type);
+    const matchedType = type !== Infinity ? type : (matches[idx].type ?? TYPE_DESKTOP);
+    return this.getLink(profileName, profileId, matchedType);
   }
 
   hasProfile(profileName: string): boolean {

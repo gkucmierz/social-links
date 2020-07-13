@@ -92,4 +92,46 @@ describe('SocialLinks', () => {
     });
   });
 
+  describe('sanitize', () => {
+    it('should sanitize link https, www', () => {
+      const sanitized = sl.sanitize('linkedin', 'https://www.linkedin.com/in/gkucmierz');
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
+
+    it('should sanitize link https', () => {
+      const sanitized = sl.sanitize('linkedin', 'https://linkedin.com/in/gkucmierz');
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
+
+    it('should sanitize link http', () => {
+      const sanitized = sl.sanitize('linkedin', 'http://linkedin.com/in/gkucmierz');
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
+
+    it('should sanitize link www', () => {
+      const sanitized = sl.sanitize('linkedin', 'www.linkedin.com/in/gkucmierz');
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
+
+    it('should sanitize link', () => {
+      const sanitized = sl.sanitize('linkedin', 'linkedin.com/in/gkucmierz');
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
+
+    it('should sanitize link as mobile', () => {
+      const sanitized = sl.sanitize('linkedin', 'linkedin.com/in/gkucmierz', TYPE_MOBILE);
+      expect(sanitized).toBe('https://linkedin.com/mwlite/in/gkucmierz');
+    });
+
+    it('should sanitize mobile link as mobile', () => {
+      const sanitized = sl.sanitize('linkedin', 'linkedin.com/mwlite/in/gkucmierz');
+      expect(sanitized).toBe('https://linkedin.com/mwlite/in/gkucmierz');
+    });
+
+    it('should sanitize mobile link as desktop', () => {
+      const sanitized = sl.sanitize('linkedin', 'linkedin.com/mwlite/in/gkucmierz', TYPE_DESKTOP);
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
+  });
+
 });
