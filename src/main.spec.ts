@@ -137,6 +137,16 @@ describe('SocialLinks', () => {
       const sanitized = sl.sanitize('linkedin', 'linkedin.com/in/gkucmierz/');
       expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
     });
+
+    it('should sanitize only profile id', () => {
+      const sanitized = sl.sanitize('linkedin', 'gkucmierz');
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
+
+    it('should sanitize only profile id as mobile', () => {
+      const sanitized = sl.sanitize('linkedin', 'gkucmierz', TYPE_MOBILE);
+      expect(sanitized).toBe('https://linkedin.com/mwlite/in/gkucmierz');
+    });
   });
 
 });
