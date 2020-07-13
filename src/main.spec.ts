@@ -132,6 +132,11 @@ describe('SocialLinks', () => {
       const sanitized = sl.sanitize('linkedin', 'linkedin.com/mwlite/in/gkucmierz', TYPE_DESKTOP);
       expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
     });
+
+    it('should sanitize link with slash at end', () => {
+      const sanitized = sl.sanitize('linkedin', 'linkedin.com/in/gkucmierz/');
+      expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+    });
   });
 
 });

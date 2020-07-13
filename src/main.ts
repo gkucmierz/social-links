@@ -83,11 +83,11 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'linkedin',
     matches: [
       {
-        match: '(https?://)?(www.)?linkedin.com/in/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)?linkedin.com/in/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://linkedin.com/in/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?(www.)?linkedin.com/mwlite/in/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
+        match: '(https?://)?(www.)?linkedin.com/mwlite/in/({PROFILE_ID})/?', group: 3, type: TYPE_MOBILE,
         pattern: 'https://linkedin.com/mwlite/in/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -96,7 +96,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'twitter',
     matches: [
       {
-        match: '(https?://)?(www.)?twitter.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)?twitter.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://twitter.com/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -105,11 +105,11 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'facebook',
     matches: [
       {
-        match: '(https?://)?(www.)?facebook.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)?facebook.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://facebook.com/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.facebook.com/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
+        match: '(https?://)?m.facebook.com/({PROFILE_ID})/?', group: 3, type: TYPE_MOBILE,
         pattern: 'https://m.facebook.com/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -118,11 +118,11 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'youtube',
     matches: [
       {
-        match: '(https?://)?(www.)youtube.com/channel/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)youtube.com/channel/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://youtube.com/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.youtube/c/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
+        match: '(https?://)?m.youtube/c/({PROFILE_ID})/?', group: 3, type: TYPE_MOBILE,
         pattern: 'https://m.youtube/c/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -131,11 +131,11 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'twitch',
     matches: [
       {
-        match: '(https?://)?(www.)?twitch.tv/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)?twitch.tv/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://twitch.tv/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.twitch.tv/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
+        match: '(https?://)?m.twitch.tv/({PROFILE_ID})/?', group: 3, type: TYPE_MOBILE,
         pattern: 'https://m.twitch.tv/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -144,7 +144,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'discord',
     matches: [
       {
-        match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://discord.com/channels/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -153,7 +153,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'instagram',
     matches: [
       {
-        match: '(https?://)?(www.)?instagram.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)?instagram.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://instagram.com/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -162,7 +162,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'patreon',
     matches: [
       {
-        match: '(https?://)?(www.)?patreon.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
+        match: '(https?://)?(www.)?patreon.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://patreon.com/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
