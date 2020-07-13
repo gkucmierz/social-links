@@ -1,5 +1,5 @@
 
-import { SocialLinks } from './main';
+import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE } from './main';
 
 describe('SocialLinks', () => {
   let sl: SocialLinks;
@@ -10,15 +10,15 @@ describe('SocialLinks', () => {
 
   describe('constants', () => {
     it('should be defined DESKTOP', () => {
-      expect(SocialLinks.TYPE_DESKTOP).toBeDefined();
+      expect(TYPE_DESKTOP).toBeDefined();
     });
 
     it('should be defined MOBILE', () => {
-      expect(SocialLinks.TYPE_MOBILE).toBeDefined();
+      expect(TYPE_MOBILE).toBeDefined();
     });
 
     it('should be distnict', () => {
-      expect(SocialLinks.TYPE_MOBILE).not.toEqual(SocialLinks.TYPE_DESKTOP);
+      expect(TYPE_MOBILE).not.toEqual(TYPE_DESKTOP);
     });
   });
 
@@ -84,11 +84,11 @@ describe('SocialLinks', () => {
     });
 
     it('should create TYPE_DESKTOP link', () => {
-      expect(sl.getLink('linkedin', 'gkucmierz', SocialLinks.TYPE_DESKTOP)).toBe('https://linkedin.com/in/gkucmierz');
+      expect(sl.getLink('linkedin', 'gkucmierz', TYPE_DESKTOP)).toBe('https://linkedin.com/in/gkucmierz');
     });
 
     it('should create TYPE_MOBILE link', () => {
-      expect(sl.getLink('linkedin', 'gkucmierz', SocialLinks.TYPE_MOBILE)).toBe('https://linkedin.com/mwlite/in/gkucmierz');
+      expect(sl.getLink('linkedin', 'gkucmierz', TYPE_MOBILE)).toBe('https://linkedin.com/mwlite/in/gkucmierz');
     });
   });
 

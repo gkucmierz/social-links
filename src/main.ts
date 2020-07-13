@@ -1,8 +1,16 @@
 
-interface ProfileMatch {
+// import { PREDEFINED_PROFILES } from './profiles';
+
+export interface ProfileMatch {
   match: string;
-  id: number;
+  group: number;
   type?: number;
+  pattern?: string;
+}
+
+export interface Profile {
+  name: string;
+  matches: ProfileMatch[];
 }
 
 const escapeRegex = (string: string): string => {
@@ -22,9 +30,9 @@ const findIndex = (matches: ProfileMatch[], link: string): number => {
   return matches.findIndex(({ match }) => createRegexp(match).test(link));
 };
 
+export const TYPE_DESKTOP = 0;
+export const TYPE_MOBILE = 1;
 export class SocialLinks {
-  static TYPE_DESKTOP = 0;
-  static TYPE_MOBILE = 1;
 
   constructor(usePredefinedProfiles = true) {
     if (usePredefinedProfiles) {
@@ -53,10 +61,10 @@ export class SocialLinks {
     const matches = profiles.get(profileName);
     const idx = findIndex(matches, link);
     if (idx === -1) throw new Error(`Link has not matched with profile ${profileName}`);
-    return (link.match(createRegexp(matches[idx].match)) || [])[matches[idx].id];
+    return (link.match(createRegexp(matches[idx].match)) || [])[matches[idx].group];
   }
 
-  getLink(profileName: string, id: string, type = SocialLinks.TYPE_DESKTOP): string {
+  getLink(profileName: string, id: string, type = TYPE_DESKTOP): string {
     if (!this.hasProfile(profileName)) throw new Error(`There is no profile ${profileName} defined`);
     const matches = profiles.get(profileName);
     const idx = matches.findIndex((match: ProfileMatch) => match.type === type);
@@ -68,7 +76,7 @@ export class SocialLinks {
     const profileId = this.getProfileId(profileName, link);
     const matches = profiles.get(profileName);
     const idx = findIndex(matches, link);
-    const type = matches[idx].type || SocialLinks.TYPE_DESKTOP;
+    const type = matches[idx].type || TYPE_DESKTOP;
     return this.getLink(profileName, profileId, type);
   }
 
@@ -77,93 +85,93 @@ export class SocialLinks {
   }
 }
 
-const PREDEFINED_PROFILES = [
+export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'linkedin',
     matches: [
       {
-        match: '(https?://)?(www.)?linkedin.com/in/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)?linkedin.com/in/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://linkedin.com/in/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?(www.)?linkedin.com/mwlite/in/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        match: '(https?://)?(www.)?linkedin.com/mwlite/in/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
         pattern: 'https://linkedin.com/mwlite/in/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'twitter',
     matches: [
       {
-        match: '(https?://)?(www.)?twitter.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)?twitter.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://twitter.com/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'facebook',
     matches: [
       {
-        match: '(https?://)?(www.)?facebook.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)?facebook.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://facebook.com/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.facebook.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        match: '(https?://)?m.facebook.com/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
         pattern: 'https://m.facebook.com/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'youtube',
     matches: [
       {
-        match: '(https?://)?(www.)youtube.com/channel/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)youtube.com/channel/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://youtube.com/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.youtube/c/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        match: '(https?://)?m.youtube/c/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
         pattern: 'https://m.youtube/c/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'twitch',
     matches: [
       {
-        match: '(https?://)?(www.)?twitch.tv/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)?twitch.tv/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://twitch.tv/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.twitch.tv/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_MOBILE,
+        match: '(https?://)?m.twitch.tv/({PROFILE_ID})', group: 3, type: TYPE_MOBILE,
         pattern: 'https://m.twitch.tv/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'discord',
     matches: [
       {
-        match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://discord.com/channels/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'instagram',
     matches: [
       {
-        match: '(https?://)?(www.)?instagram.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)?instagram.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://instagram.com/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'patreon',
     matches: [
       {
-        match: '(https?://)?(www.)?patreon.com/({PROFILE_ID})', id: 3, type: SocialLinks.TYPE_DESKTOP,
+        match: '(https?://)?(www.)?patreon.com/({PROFILE_ID})', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://patreon.com/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', id: 1 },
+      { match: '({PROFILE_ID})', group: 1 },
     ]
   },
 ];

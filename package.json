@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "start": "nodemon --ignore './lib' -e ts,json --exec 'npm run build && npm run test && true'",
-    "build": "tsc",
+    "build": "npm run clean && tsc",
+    "clean": "rimraf ./lib",
     "prepare": "npm run build",
     "test": "jest --no-cache ./*",
     "watch": "jest --no-cache --watch ./*"
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.4",
     "jest": "^26.1.0",
+    "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"
   }
