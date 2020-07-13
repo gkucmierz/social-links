@@ -13,7 +13,7 @@
     "clean": "rimraf ./lib",
     "prepare": "npm run build",
     "test": "jest --no-cache ./*",
-    "watch": "jest --no-cache --watch ./*"
+    "test:watch": "jest --no-cache --watch ./*"
   },
   "keywords": [],
   "author": "",
