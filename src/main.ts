@@ -1,6 +1,4 @@
 
-// import { PREDEFINED_PROFILES } from './profiles';
-
 export interface ProfileMatch {
   match: string;
   group: number;
@@ -12,10 +10,6 @@ export interface Profile {
   name: string;
   matches: ProfileMatch[];
 }
-
-const escapeRegex = (string: string): string => {
-  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-};
 
 const profiles = new Map();
 const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
