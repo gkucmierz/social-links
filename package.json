@@ -1,6 +1,6 @@
 {
   "name": "social-links",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Validate & sanitize social links",
   "main": "lib/main.js",
   "types": "lib/main.d.ts",
@@ -15,7 +15,26 @@
     "test": "jest --no-cache ./*",
     "test:watch": "jest --no-cache --watch ./*"
   },
-  "keywords": ["social", "links", "media", "social-links", "social-media", "validate", "validation", "is-valid", "sanitize", "sanitization", "linkedin", "twitter", "facebook", "youtube", "twitch", "discord", "instagram", "patreon"],
+  "keywords": [
+    "social",
+    "links",
+    "media",
+    "social-links",
+    "social-media",
+    "validate",
+    "validation",
+    "is-valid",
+    "sanitize",
+    "sanitization",
+    "linkedin",
+    "twitter",
+    "facebook",
+    "youtube",
+    "twitch",
+    "discord",
+    "instagram",
+    "patreon"
+  ],
   "author": "Grzegorz Kucmierz",
   "license": "MIT",
   "devDependencies": {
