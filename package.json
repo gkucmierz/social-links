@@ -15,8 +15,8 @@
     "test": "jest --no-cache ./*",
     "test:watch": "jest --no-cache --watch ./*"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["social", "links", "media", "social-links", "social-media", "validate", "validation", "is-valid", "sanitize", "sanitization", "linkedin", "twitter", "facebook", "youtube", "twitch", "discord", "instagram", "patreon"],
+  "author": "Grzegorz Kucmierz",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^26.0.4",
