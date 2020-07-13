@@ -49,6 +49,18 @@ const profile: Profile = { ... };
 socialLinks.addProfile('profileName', profile);
 ```
 
+### Don't use predefined profiles
+```js
+import { SocialLinks } from 'social-links';
+
+const useProfiles = false;
+const socialLinks = new SocialLinks(useProfiles);
+
+// or clean them:
+
+socialLinks.cleanProfiles();
+```
+
 ### Tests
 
 Watch, *tsc* build & *jest* tests
