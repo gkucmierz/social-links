@@ -61,12 +61,14 @@ const socialLinks = new SocialLinks(useProfiles);
 socialLinks.cleanProfiles();
 ```
 
-### Tests
+### Build
 
-Watch, *tsc* build & *jest* tests
+Watch, *tsc* build
 ```bash
 npm run start
 ```
+
+### Tests
 
 Just *jest* tests
 ```bash
