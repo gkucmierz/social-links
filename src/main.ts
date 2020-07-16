@@ -113,7 +113,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
         pattern: 'https://facebook.com/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.facebook.com/({PROFILE_ID})/?', group: 3, type: TYPE_MOBILE,
+        match: '(https?://)?m.facebook.com/({PROFILE_ID})/?', group: 2, type: TYPE_MOBILE,
         pattern: 'https://m.facebook.com/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
@@ -122,12 +122,13 @@ export const PREDEFINED_PROFILES: Profile[] = [
   { name: 'youtube',
     matches: [
       {
-        match: '(https?://)?(www.)youtube.com/channel/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
-        pattern: 'https://youtube.com/{PROFILE_ID}'
+        match: '(https?://)?(www.)?youtube.com/channel/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
+        pattern: 'https://youtube.com/channel/{PROFILE_ID}'
+
       },
       {
-        match: '(https?://)?m.youtube/c/({PROFILE_ID})/?', group: 3, type: TYPE_MOBILE,
-        pattern: 'https://m.youtube/c/{PROFILE_ID}'
+        match: '(https?://)?m.youtube.com/c/({PROFILE_ID})/?', group: 2, type: TYPE_MOBILE,
+        pattern: 'https://m.youtube.com/c/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
     ]
@@ -139,26 +140,30 @@ export const PREDEFINED_PROFILES: Profile[] = [
         pattern: 'https://twitch.tv/{PROFILE_ID}'
       },
       {
-        match: '(https?://)?m.twitch.tv/({PROFILE_ID})/?', group: 3, type: TYPE_MOBILE,
+        match: '(https?://)?m.twitch.tv/({PROFILE_ID})/?', group: 2, type: TYPE_MOBILE,
         pattern: 'https://m.twitch.tv/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
     ]
   },
-  { name: 'discord',
-    matches: [
-      {
-        match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
-        pattern: 'https://discord.com/channels/{PROFILE_ID}'
-      },
-      { match: '({PROFILE_ID})', group: 1 },
-    ]
-  },
+  // { name: 'discord',
+  //   matches: [
+  //     {
+  //       match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
+  //       pattern: 'https://discord.com/channels/{PROFILE_ID}'
+  //     },
+  //     { match: '({PROFILE_ID})', group: 1 },
+  //   ]
+  // },
   { name: 'instagram',
     matches: [
       {
         match: '(https?://)?(www.)?instagram.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
         pattern: 'https://instagram.com/{PROFILE_ID}'
+      },
+      {
+        match: '(https?://)?m.instagram.com/({PROFILE_ID})/?', group: 2, type: TYPE_MOBILE,
+        pattern: 'https://m.instagram.com/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
     ]
