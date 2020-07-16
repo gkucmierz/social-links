@@ -9,11 +9,11 @@ describe('SocialLinks', () => {
   });
 
   describe('constants', () => {
-    it('should be defined DESKTOP', () => {
+    it('should be defined TYPE_DESKTOP', () => {
       expect(TYPE_DESKTOP).toBeDefined();
     });
 
-    it('should be defined MOBILE', () => {
+    it('should be defined TYPE_MOBILE', () => {
       expect(TYPE_MOBILE).toBeDefined();
     });
 
