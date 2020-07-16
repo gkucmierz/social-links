@@ -15,6 +15,12 @@
     "test": "jest --no-cache ./*",
     "test:watch": "jest --no-cache --watch ./*"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/gkucmierz/social-links.git"
@@ -47,6 +53,7 @@
   "homepage": "https://github.com/gkucmierz/social-links#readme",
   "devDependencies": {
     "@types/jest": "^26.0.4",
+    "husky": "^4.2.5",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
