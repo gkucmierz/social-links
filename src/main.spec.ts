@@ -240,5 +240,12 @@ describe('SocialLinks', () => {
       const desktop = `https://github.com/${profileId}`;
       testProfileDesktop(profile, profileId, desktop);
     });
+
+    it('should medium', () => {
+      const profile = 'medium';
+      const profileId = 'grzegorzkumierz';
+      const desktop = `https://medium.com/@${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
   });
 });

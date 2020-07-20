@@ -186,5 +186,14 @@ export const PREDEFINED_PROFILES: Profile[] = [
       { match: '({PROFILE_ID})', group: 1 },
     ]
   },
-  // [medium", "dribbble", "behance"]
+  { name: 'medium',
+    matches: [
+      {
+        match: '(https?://)?(www.)?medium.com/@({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
+        pattern: 'https://medium.com/@{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', group: 1 },
+    ]
+  },
+  // ["dribbble", "behance"]
 ];
