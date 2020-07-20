@@ -247,5 +247,12 @@ describe('SocialLinks', () => {
       const desktop = `https://medium.com/@${profileId}`;
       testProfileDesktop(profile, profileId, desktop);
     });
+
+    it('should dribbble', () => {
+      const profile = 'dribbble';
+      const profileId = 'gkucmierz';
+      const desktop = `https://dribbble.com/${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
   });
 });

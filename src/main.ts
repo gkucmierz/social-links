@@ -195,5 +195,14 @@ export const PREDEFINED_PROFILES: Profile[] = [
       { match: '({PROFILE_ID})', group: 1 },
     ]
   },
-  // ["dribbble", "behance"]
+  { name: 'dribbble',
+    matches: [
+      {
+        match: '(https?://)?(www.)?dribbble.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
+        pattern: 'https://dribbble.com/{PROFILE_ID}'
+      },
+      { match: '({PROFILE_ID})', group: 1 },
+    ]
+  },
+  // ["behance"]
 ];
