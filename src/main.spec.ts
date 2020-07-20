@@ -254,5 +254,12 @@ describe('SocialLinks', () => {
       const desktop = `https://dribbble.com/${profileId}`;
       testProfileDesktop(profile, profileId, desktop);
     });
+
+    it('should behance', () => {
+      const profile = 'behance';
+      const profileId = 'grzegorzkumierz';
+      const desktop = `https://behance.net/${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
   });
 });
