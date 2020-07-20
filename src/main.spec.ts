@@ -233,5 +233,12 @@ describe('SocialLinks', () => {
       const desktop = `https://patreon.com/${profileId}`;
       testProfileDesktop(profile, profileId, desktop);
     });
+
+    it('should github', () => {
+      const profile = 'github';
+      const profileId = 'gkucmierz';
+      const desktop = `https://github.com/${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
   });
 });
