@@ -43,7 +43,11 @@
     "twitch",
     "discord",
     "instagram",
-    "patreon"
+    "patreon",
+    "github",
+    "medium",
+    "dribbble",
+    "behance"
   ],
   "author": "Grzegorz Kucmierz",
   "license": "MIT",

@@ -26,10 +26,29 @@ const findIndex = (matches: ProfileMatch[], link: string): number => {
 
 export const TYPE_DESKTOP = 0;
 export const TYPE_MOBILE = 1;
+
+export interface Config {
+  usePredefinedProfiles?: boolean;
+  // trimInput?: boolean;
+  // allowQueryParams?: boolean;
+}
+
+export const DEFAULT_CONFIG: Config = {
+  usePredefinedProfiles: true,
+  // trimInput: false,
+  // allowQueryParams: false
+};
+let config;
+
 export class SocialLinks {
 
-  constructor(usePredefinedProfiles = true) {
-    if (usePredefinedProfiles) {
+  constructor(conf: Config | boolean = {}) {
+    if (typeof conf === 'boolean') {
+      conf = { usePredefinedProfiles: true };
+    }
+    config = { ...conf, ...DEFAULT_CONFIG };
+
+    if (config.usePredefinedProfiles) {
       PREDEFINED_PROFILES.map(({ name, matches }) => profiles.set(name, matches));
     }
   }
