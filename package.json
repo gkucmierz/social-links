@@ -1,6 +1,6 @@
 {
   "name": "social-links",
-  "version": "1.0.2",
+  "version": "1.0.8",
   "description": "Validate & sanitize social links",
   "main": "lib/main.js",
   "types": "lib/main.d.ts",
@@ -8,12 +8,22 @@
     "lib/**/*"
   ],
   "scripts": {
-    "start": "nodemon --ignore './lib' -e ts,json --exec 'npm run build && npm run test && true'",
+    "start": "nodemon --ignore './lib' --exec 'npm run build && true'",
     "build": "npm run clean && tsc",
     "clean": "rimraf ./lib",
     "prepare": "npm run build",
     "test": "jest --no-cache ./*",
     "test:watch": "jest --no-cache --watch ./*"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkucmierz/social-links.git"
   },
   "keywords": [
     "social",
@@ -37,9 +47,15 @@
   ],
   "author": "Grzegorz Kucmierz",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gkucmierz/social-links/issues"
+  },
+  "homepage": "https://github.com/gkucmierz/social-links#readme",
   "devDependencies": {
     "@types/jest": "^26.0.4",
+    "husky": "^4.2.5",
     "jest": "^26.1.0",
+    "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.6"

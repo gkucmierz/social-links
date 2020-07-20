@@ -9,11 +9,11 @@ describe('SocialLinks', () => {
   });
 
   describe('constants', () => {
-    it('should be defined DESKTOP', () => {
+    it('should be defined TYPE_DESKTOP', () => {
       expect(TYPE_DESKTOP).toBeDefined();
     });
 
-    it('should be defined MOBILE', () => {
+    it('should be defined TYPE_MOBILE', () => {
       expect(TYPE_MOBILE).toBeDefined();
     });
 
@@ -149,4 +149,117 @@ describe('SocialLinks', () => {
     });
   });
 
+  describe('PREDEFINED_PROFILES', () => {
+
+    const testProfile = (profile: string, profileId: string, desktop: string, mobile: string) => {
+      expect(sl.isValid(profile, desktop)).toBeTruthy();
+      expect(sl.isValid(profile, mobile)).toBeTruthy();
+
+      expect(sl.getProfileId(profile, desktop)).toBe(profileId);
+      expect(sl.getProfileId(profile, mobile)).toBe(profileId);
+
+      expect(sl.getLink(profile, profileId)).toBe(desktop);
+      expect(sl.getLink(profile, profileId, TYPE_DESKTOP)).toBe(desktop);
+      expect(sl.getLink(profile, profileId, TYPE_MOBILE)).toBe(mobile);
+
+      expect(sl.sanitize(profile, desktop)).toBe(desktop);
+      expect(sl.sanitize(profile, desktop, TYPE_DESKTOP)).toBe(desktop);
+      expect(sl.sanitize(profile, mobile, TYPE_MOBILE)).toBe(mobile);
+    };
+
+    const testProfileDesktop = (profile: string, profileId: string, desktop: string) => {
+      expect(sl.isValid(profile, desktop)).toBeTruthy();
+
+      expect(sl.getProfileId(profile, desktop)).toBe(profileId);
+
+      expect(sl.getLink(profile, profileId)).toBe(desktop);
+      expect(sl.getLink(profile, profileId, TYPE_DESKTOP)).toBe(desktop);
+
+      expect(sl.sanitize(profile, desktop)).toBe(desktop);
+      expect(sl.sanitize(profile, desktop, TYPE_DESKTOP)).toBe(desktop);
+    };
+
+    it('should linkedin', () => {
+      const profile = 'linkedin';
+      const profileId = 'gkucmierz';
+      const desktop = `https://linkedin.com/in/${profileId}`;
+      const mobile = `https://linkedin.com/mwlite/in/${profileId}`;
+      testProfile(profile, profileId, desktop, mobile);
+    });
+
+    it('should twitter', () => {
+      const profile = 'twitter';
+      const profileId = 'webtools_app';
+      const desktop = `https://twitter.com/${profileId}`;
+      const mobile = `https://mobile.twitter.com/${profileId}`;
+      testProfile(profile, profileId, desktop, mobile);
+    });
+
+    it('should facebook', () => {
+      const profile = 'facebook';
+      const profileId = 'gkucmierz';
+      const desktop = `https://facebook.com/${profileId}`;
+      const mobile = `https://m.facebook.com/${profileId}`;
+      testProfile(profile, profileId, desktop, mobile);
+    });
+
+    it('should youtube', () => {
+      const profile = 'youtube';
+      const profileId = 'UCpHGx5iSfXZ-7AicGd6IZtg';
+      const desktop = `https://youtube.com/channel/${profileId}`;
+      const mobile = `https://m.youtube.com/c/${profileId}`;
+      testProfile(profile, profileId, desktop, mobile);
+    });
+
+    it('should twitch', () => {
+      const profile = 'twitch';
+      const profileId = 'gkucmierz';
+      const desktop = `https://twitch.tv/${profileId}`;
+      const mobile = `https://m.twitch.tv/${profileId}`;
+      testProfile(profile, profileId, desktop, mobile);
+    });
+
+    it('should instagram', () => {
+      const profile = 'instagram';
+      const profileId = 'javascript.js';
+      const desktop = `https://instagram.com/${profileId}`;
+      const mobile = `https://m.instagram.com/${profileId}`;
+      testProfile(profile, profileId, desktop, mobile);
+    });
+
+    it('should patreon', () => {
+      const profile = 'patreon';
+      const profileId = 'gkucmierz';
+      const desktop = `https://patreon.com/${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
+
+    it('should github', () => {
+      const profile = 'github';
+      const profileId = 'gkucmierz';
+      const desktop = `https://github.com/${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
+
+    it('should medium', () => {
+      const profile = 'medium';
+      const profileId = 'grzegorzkumierz';
+      const desktop = `https://medium.com/@${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
+
+    it('should dribbble', () => {
+      const profile = 'dribbble';
+      const profileId = 'gkucmierz';
+      const desktop = `https://dribbble.com/${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
+
+    it('should behance', () => {
+      const profile = 'behance';
+      const profileId = 'grzegorzkumierz';
+      const desktop = `https://behance.net/${profileId}`;
+      testProfileDesktop(profile, profileId, desktop);
+    });
+  });
 });
