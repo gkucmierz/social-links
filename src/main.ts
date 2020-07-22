@@ -25,6 +25,7 @@ const findIndex = (matches: ProfileMatch[] | undefined, link: string): number =>
 
 export const TYPE_DESKTOP = 0;
 export const TYPE_MOBILE = 1;
+const TYPE_DEFAULT = Infinity;
 
 export interface Config {
   usePredefinedProfiles?: boolean;
@@ -51,7 +52,7 @@ export class SocialLinks {
     this.profiles = new Map();
 
     if (this.config.usePredefinedProfiles) {
-      PREDEFINED_PROFILES.map(({ name, matches }) => this.profiles.set(name, matches));
+      PREDEFINED_PROFILES.map(({ name, matches }) => this.addProfile(name, matches));
     }
   }
 
@@ -79,19 +80,23 @@ export class SocialLinks {
     return (link.match(createRegexp(matches[idx].match)) ?? [])[matches[idx].group];
   }
 
-  getLink(profileName: string, id: string, type = TYPE_DESKTOP): string {
+  getLink(profileName: string, id: string, type = TYPE_DEFAULT): string {
     if (!this.hasProfile(profileName)) throw new Error(`There is no profile ${profileName} defined`);
     const matches = this.profiles.get(profileName) ?? [];
-    const idx = matches.findIndex((match: ProfileMatch) => match.type === type);
+    const weakType = type === TYPE_DEFAULT ? TYPE_DESKTOP : type;
+    const idx = matches.findIndex((match: ProfileMatch) => {
+      if (type === TYPE_DEFAULT) return true;
+      return match.type === weakType;
+    });
     if (idx === -1) throw new Error(`There is no pattern for profile ${profileName}`);
     return (matches[idx].pattern ?? '').replace('{PROFILE_ID}', `${id}`);
   }
 
-  sanitize(profileName: string, link: string, type = Infinity): string {
+  sanitize(profileName: string, link: string, type = TYPE_DEFAULT): string {
     const profileId = this.getProfileId(profileName, link);
     const matches = this.profiles.get(profileName) ?? [];
     const idx = findIndex(matches, link);
-    const matchedType = type !== Infinity ? type : (matches[idx].type ?? TYPE_DESKTOP);
+    const matchedType = type !== TYPE_DEFAULT ? type : (matches[idx].type ?? TYPE_DEFAULT);
     return this.getLink(profileName, profileId, matchedType);
   }
 

@@ -1,5 +1,5 @@
 
-import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE } from './main';
+import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE, Profile } from './main';
 
 describe('SocialLinks', () => {
   let sl: SocialLinks;
@@ -272,6 +272,20 @@ describe('SocialLinks', () => {
     it('should set usePredefinedProfiles = false', () => {
       sl = new SocialLinks({ usePredefinedProfiles: false });
       expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
+    });
+  });
+
+  describe('profiles', () => {
+    it('should clean profiles', () => {
+      sl = new SocialLinks({ usePredefinedProfiles: false });
+      expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
+    });
+
+    it('should add profile', () => {
+      const name = 'test';
+      sl.addProfile(name, [{ match: '(.{3})', group: 1, pattern: '-{PROFILE_ID}-' }]);
+      expect(sl.isValid(name, '123')).toBeTruthy();
+      expect(sl.sanitize(name, '123')).toBe('-123-');
     });
   });
 
