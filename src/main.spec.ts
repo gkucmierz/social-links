@@ -1,5 +1,5 @@
 
-import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE } from './main';
+import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE, Profile } from './main';
 
 describe('SocialLinks', () => {
   let sl: SocialLinks;
@@ -152,6 +152,8 @@ describe('SocialLinks', () => {
   describe('PREDEFINED_PROFILES', () => {
 
     const testProfile = (profile: string, profileId: string, desktop: string, mobile: string) => {
+      expect(sl.hasProfile(profile)).toBeTruthy();
+
       expect(sl.isValid(profile, desktop)).toBeTruthy();
       expect(sl.isValid(profile, mobile)).toBeTruthy();
 
@@ -168,6 +170,8 @@ describe('SocialLinks', () => {
     };
 
     const testProfileDesktop = (profile: string, profileId: string, desktop: string) => {
+      expect(sl.hasProfile(profile)).toBeTruthy();
+
       expect(sl.isValid(profile, desktop)).toBeTruthy();
 
       expect(sl.getProfileId(profile, desktop)).toBe(profileId);
@@ -262,4 +266,85 @@ describe('SocialLinks', () => {
       testProfileDesktop(profile, profileId, desktop);
     });
   });
+
+  describe('config', () => {
+    describe('usePredefinedProfiles', () => {
+      it('should set usePredefinedProfiles = true', () => {
+        sl = new SocialLinks({ usePredefinedProfiles: true });
+        expect(sl.getLink('linkedin', 'gkucmierz')).toBe('https://linkedin.com/in/gkucmierz');
+      });
+
+      it('should set usePredefinedProfiles = false', () => {
+        sl = new SocialLinks({ usePredefinedProfiles: false });
+        expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
+      });
+    });
+
+    describe('trimInput', () => {
+      it('should set trimInput as default', () => {
+        sl = new SocialLinks();
+        const whitespace = [' ', '\t', '\n'].join('');
+        expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeTruthy();
+      });
+
+      it('should trim isValid', () => {
+        sl = new SocialLinks({ trimInput: true });
+        const whitespace = [' ', '\t', '\n'].join('');
+        expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeTruthy();
+      });
+
+      it('should not trim isValid', () => {
+        sl = new SocialLinks({ trimInput: false });
+        const whitespace = [' ', '\t', '\n'].join('');
+        expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeFalsy();
+      });
+    });
+
+    describe('allowQueryParams', () => {
+      it('should not allowQueryParams as default', () => {
+        const params = '?param=123&param2=abc';
+        expect(sl.isValid('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toBeFalsy();
+      });
+
+      it('should allowQueryParams in link', () => {
+        sl = new SocialLinks({ allowQueryParams: true });
+        const params = '?param=123&param2=abc';
+        expect(sl.isValid('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toBeTruthy();
+      });
+
+      it('should not allowQueryParams in link', () => {
+        sl = new SocialLinks({ allowQueryParams: false });
+        const params = '?param=123&param2=abc';
+        expect(sl.isValid('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toBeFalsy();
+      });
+
+      it('should sanitize query params with allowQueryParams = true', () => {
+        sl = new SocialLinks({ allowQueryParams: true });
+        const params = '?param=123&param2=abc';
+        const sanitized = sl.sanitize('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`);
+        expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+      });
+
+      it('should not sanitize query params with allowQueryParams = false', () => {
+        sl = new SocialLinks({ allowQueryParams: false });
+        const params = '?param=123&param2=abc';
+        expect(() => sl.sanitize('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toThrowError();
+      });
+    });
+  });
+
+  describe('profiles', () => {
+    it('should clean profiles', () => {
+      sl = new SocialLinks({ usePredefinedProfiles: false });
+      expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
+    });
+
+    it('should add profile', () => {
+      const name = 'test';
+      sl.addProfile(name, [{ match: '(.{3})', group: 1, pattern: '-{PROFILE_ID}-' }]);
+      expect(sl.isValid(name, '123')).toBeTruthy();
+      expect(sl.sanitize(name, '123')).toBe('-123-');
+    });
+  });
+
 });
