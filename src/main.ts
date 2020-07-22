@@ -185,15 +185,6 @@ export const PREDEFINED_PROFILES: Profile[] = [
       { match: '({PROFILE_ID})', group: 1 },
     ]
   },
-  // { name: 'discord',
-  //   matches: [
-  //     {
-  //       match: '(https?://)?(www.)?discord.com/channels/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
-  //       pattern: 'https://discord.com/channels/{PROFILE_ID}'
-  //     },
-  //     { match: '({PROFILE_ID})', group: 1 },
-  //   ]
-  // },
   { name: 'instagram',
     matches: [
       {
