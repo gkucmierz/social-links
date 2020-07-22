@@ -29,13 +29,13 @@ const TYPE_DEFAULT = Infinity;
 
 export interface Config {
   usePredefinedProfiles?: boolean;
-  // trimInput?: boolean;
+  trimInput?: boolean;
   // allowQueryParams?: boolean;
 }
 
 export const DEFAULT_CONFIG: Config = {
   usePredefinedProfiles: true,
-  // trimInput: false,
+  trimInput: true,
   // allowQueryParams: false
 };
 
@@ -56,6 +56,10 @@ export class SocialLinks {
     }
   }
 
+  private trim(input: string): string {
+    return this.config.trimInput ? input.trim() : input;
+  }
+
   addProfile(profileName: string, profileMatches: ProfileMatch[]): boolean {
     if (this.hasProfile(profileName)) return false;
     this.profiles.set(profileName, profileMatches);
@@ -69,15 +73,16 @@ export class SocialLinks {
   isValid(profileName: string, link: string): boolean {
     if (!this.hasProfile(profileName)) return false;
     const matches = this.profiles.get(profileName);
-    return findIndex(matches, link) !== -1;
+    return findIndex(matches, this.trim(link)) !== -1;
   }
 
   getProfileId(profileName: string, link: string): string {
     if (!this.hasProfile(profileName)) throw new Error(`There is no profile ${profileName} defined`);
     const matches = this.profiles.get(profileName) ?? [];
-    const idx = findIndex(matches, link);
+    const trimmed = this.trim(link);
+    const idx = findIndex(matches, trimmed);
     if (idx === -1) throw new Error(`Link has not matched with profile ${profileName}`);
-    return (link.match(createRegexp(matches[idx].match)) ?? [])[matches[idx].group];
+    return (trimmed.match(createRegexp(matches[idx].match)) ?? [])[matches[idx].group];
   }
 
   getLink(profileName: string, id: string, type = TYPE_DEFAULT): string {
@@ -89,13 +94,14 @@ export class SocialLinks {
       return match.type === weakType;
     });
     if (idx === -1) throw new Error(`There is no pattern for profile ${profileName}`);
-    return (matches[idx].pattern ?? '').replace('{PROFILE_ID}', `${id}`);
+    return (matches[idx].pattern ?? '').replace('{PROFILE_ID}', `${this.trim(id)}`);
   }
 
   sanitize(profileName: string, link: string, type = TYPE_DEFAULT): string {
-    const profileId = this.getProfileId(profileName, link);
+    const trimmed = this.trim(link);
+    const profileId = this.getProfileId(profileName, trimmed);
     const matches = this.profiles.get(profileName) ?? [];
-    const idx = findIndex(matches, link);
+    const idx = findIndex(matches, trimmed);
     const matchedType = type !== TYPE_DEFAULT ? type : (matches[idx].type ?? TYPE_DEFAULT);
     return this.getLink(profileName, profileId, matchedType);
   }

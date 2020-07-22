@@ -268,14 +268,36 @@ describe('SocialLinks', () => {
   });
 
   describe('config', () => {
-    it('should set usePredefinedProfiles = true', () => {
-      sl = new SocialLinks({ usePredefinedProfiles: true });
-      expect(sl.getLink('linkedin', 'gkucmierz')).toBe('https://linkedin.com/in/gkucmierz');
+    describe('usePredefinedProfiles', () => {
+      it('should set usePredefinedProfiles = true', () => {
+        sl = new SocialLinks({ usePredefinedProfiles: true });
+        expect(sl.getLink('linkedin', 'gkucmierz')).toBe('https://linkedin.com/in/gkucmierz');
+      });
+
+      it('should set usePredefinedProfiles = false', () => {
+        sl = new SocialLinks({ usePredefinedProfiles: false });
+        expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
+      });
+
+      it('should set trimInput as default', () => {
+        sl = new SocialLinks();
+        const whitespace = [' ', '\t', '\n'].join('');
+        expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeTruthy();
+      });
     });
 
-    it('should set usePredefinedProfiles = false', () => {
-      sl = new SocialLinks({ usePredefinedProfiles: false });
-      expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
+    describe('trimInput', () => {
+      it('should trim isValid', () => {
+        sl = new SocialLinks({ trimInput: true });
+        const whitespace = [' ', '\t', '\n'].join('');
+        expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeTruthy();
+      });
+
+      it('should not trim isValid', () => {
+        sl = new SocialLinks({ trimInput: false });
+        const whitespace = [' ', '\t', '\n'].join('');
+        expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeFalsy();
+      });
     });
   });
 
