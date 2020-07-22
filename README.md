@@ -1,3 +1,4 @@
+
 # Social Links
 
 Social Links is helping to validate and sanitize social (desktop & mobile) links
@@ -49,16 +50,16 @@ const profile: Profile = { ... };
 socialLinks.addProfile('profileName', profile);
 ```
 
-### Don't use predefined profiles
+### Configuration
 ```js
-import { SocialLinks } from 'social-links';
+import { SocialLinks, Config } from 'social-links';
 
-const useProfiles = false;
-const socialLinks = new SocialLinks(useProfiles);
-
-// or clean them:
-
-socialLinks.cleanProfiles();
+const config: Config = {
+  usePredefinedProfiles: true,
+  trimInput: true,
+  allowQueryParams: false,
+};
+const socialLinks = new SocialLinks(config);
 ```
 
 ### Build
