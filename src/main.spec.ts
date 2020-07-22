@@ -299,6 +299,38 @@ describe('SocialLinks', () => {
         expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeFalsy();
       });
     });
+
+    describe('allowQueryParams', () => {
+      it('should not allowQueryParams as default', () => {
+        const params = '?param=123&param2=abc';
+        expect(sl.isValid('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toBeFalsy();
+      });
+
+      it('should allowQueryParams in link', () => {
+        sl = new SocialLinks({ allowQueryParams: true });
+        const params = '?param=123&param2=abc';
+        expect(sl.isValid('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toBeTruthy();
+      });
+
+      it('should not allowQueryParams in link', () => {
+        sl = new SocialLinks({ allowQueryParams: false });
+        const params = '?param=123&param2=abc';
+        expect(sl.isValid('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toBeFalsy();
+      });
+
+      it('should sanitize query params with allowQueryParams = true', () => {
+        sl = new SocialLinks({ allowQueryParams: true });
+        const params = '?param=123&param2=abc';
+        const sanitized = sl.sanitize('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`);
+        expect(sanitized).toBe('https://linkedin.com/in/gkucmierz');
+      });
+
+      it('should not sanitize query params with allowQueryParams = false', () => {
+        sl = new SocialLinks({ allowQueryParams: false });
+        const params = '?param=123&param2=abc';
+        expect(() => sl.sanitize('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toThrowError();
+      });
+    });
   });
 
   describe('profiles', () => {
