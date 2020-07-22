@@ -262,4 +262,17 @@ describe('SocialLinks', () => {
       testProfileDesktop(profile, profileId, desktop);
     });
   });
+
+  describe('config', () => {
+    it('should set usePredefinedProfiles = true', () => {
+      sl = new SocialLinks({ usePredefinedProfiles: true });
+      expect(sl.getLink('linkedin', 'gkucmierz')).toBe('https://linkedin.com/in/gkucmierz');
+    });
+
+    it('should set usePredefinedProfiles = false', () => {
+      sl = new SocialLinks({ usePredefinedProfiles: false });
+      expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
+    });
+  });
+
 });

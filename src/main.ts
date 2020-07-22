@@ -11,7 +11,6 @@ export interface Profile {
   matches: ProfileMatch[];
 }
 
-const profiles = new Map();
 const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
 
 const createRegexp = (match: string): RegExp => {
@@ -20,8 +19,8 @@ const createRegexp = (match: string): RegExp => {
   return regexp;
 };
 
-const findIndex = (matches: ProfileMatch[], link: string): number => {
-  return matches.findIndex(({ match }) => createRegexp(match).test(link));
+const findIndex = (matches: ProfileMatch[] | undefined, link: string): number => {
+  return (matches ?? []).findIndex(({ match }) => createRegexp(match).test(link));
 };
 
 export const TYPE_DESKTOP = 0;
@@ -38,63 +37,66 @@ export const DEFAULT_CONFIG: Config = {
   // trimInput: false,
   // allowQueryParams: false
 };
-let config;
 
 export class SocialLinks {
+  private profiles: Map<any, ProfileMatch[]>;
+  private config: Config;
 
-  constructor(conf: Config | boolean = {}) {
-    if (typeof conf === 'boolean') {
-      conf = { usePredefinedProfiles: true };
+  constructor(config: Config | boolean = DEFAULT_CONFIG) {
+    if (typeof config === 'boolean') {
+      config = { usePredefinedProfiles: config };
     }
-    config = { ...conf, ...DEFAULT_CONFIG };
+    this.config = { ...DEFAULT_CONFIG, ...config };
 
-    if (config.usePredefinedProfiles) {
-      PREDEFINED_PROFILES.map(({ name, matches }) => profiles.set(name, matches));
+    this.profiles = new Map();
+
+    if (this.config.usePredefinedProfiles) {
+      PREDEFINED_PROFILES.map(({ name, matches }) => this.profiles.set(name, matches));
     }
   }
 
   addProfile(profileName: string, profileMatches: ProfileMatch[]): boolean {
     if (this.hasProfile(profileName)) return false;
-    profiles.set(profileName, profileMatches);
+    this.profiles.set(profileName, profileMatches);
     return true;
   }
 
   cleanProfiles(): void {
-    profiles.clear();
+    this.profiles.clear();
   }
 
   isValid(profileName: string, link: string): boolean {
     if (!this.hasProfile(profileName)) return false;
-    const matches = profiles.get(profileName);
+    const matches = this.profiles.get(profileName);
     return findIndex(matches, link) !== -1;
   }
 
   getProfileId(profileName: string, link: string): string {
     if (!this.hasProfile(profileName)) throw new Error(`There is no profile ${profileName} defined`);
-    const matches = profiles.get(profileName);
+    const matches = this.profiles.get(profileName) ?? [];
     const idx = findIndex(matches, link);
     if (idx === -1) throw new Error(`Link has not matched with profile ${profileName}`);
-    return (link.match(createRegexp(matches[idx].match)) || [])[matches[idx].group];
+    return (link.match(createRegexp(matches[idx].match)) ?? [])[matches[idx].group];
   }
 
   getLink(profileName: string, id: string, type = TYPE_DESKTOP): string {
     if (!this.hasProfile(profileName)) throw new Error(`There is no profile ${profileName} defined`);
-    const matches = profiles.get(profileName);
+    const matches = this.profiles.get(profileName) ?? [];
     const idx = matches.findIndex((match: ProfileMatch) => match.type === type);
     if (idx === -1) throw new Error(`There is no pattern for profile ${profileName}`);
-    return matches[idx].pattern.replace('{PROFILE_ID}', `${id}`);
+    return (matches[idx].pattern ?? '').replace('{PROFILE_ID}', `${id}`);
   }
 
   sanitize(profileName: string, link: string, type = Infinity): string {
     const profileId = this.getProfileId(profileName, link);
-    const matches = profiles.get(profileName);
+    const matches = this.profiles.get(profileName) ?? [];
     const idx = findIndex(matches, link);
     const matchedType = type !== Infinity ? type : (matches[idx].type ?? TYPE_DESKTOP);
     return this.getLink(profileName, profileId, matchedType);
   }
 
   hasProfile(profileName: string): boolean {
-    return profiles.has(profileName);
+    return this.profiles.has(profileName);
   }
 }
 
