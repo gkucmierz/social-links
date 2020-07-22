@@ -278,15 +278,15 @@ describe('SocialLinks', () => {
         sl = new SocialLinks({ usePredefinedProfiles: false });
         expect(() => sl.getLink('linkedin', 'gkucmierz')).toThrowError();
       });
+    });
 
+    describe('trimInput', () => {
       it('should set trimInput as default', () => {
         sl = new SocialLinks();
         const whitespace = [' ', '\t', '\n'].join('');
         expect(sl.isValid('linkedin', `${whitespace}http://www.linkedin.com/in/gkucmierz${whitespace}`)).toBeTruthy();
       });
-    });
 
-    describe('trimInput', () => {
       it('should trim isValid', () => {
         sl = new SocialLinks({ trimInput: true });
         const whitespace = [' ', '\t', '\n'].join('');
