@@ -152,6 +152,8 @@ describe('SocialLinks', () => {
   describe('PREDEFINED_PROFILES', () => {
 
     const testProfile = (profile: string, profileId: string, desktop: string, mobile: string) => {
+      expect(sl.hasProfile(profile)).toBeTruthy();
+
       expect(sl.isValid(profile, desktop)).toBeTruthy();
       expect(sl.isValid(profile, mobile)).toBeTruthy();
 
@@ -168,6 +170,8 @@ describe('SocialLinks', () => {
     };
 
     const testProfileDesktop = (profile: string, profileId: string, desktop: string) => {
+      expect(sl.hasProfile(profile)).toBeTruthy();
+
       expect(sl.isValid(profile, desktop)).toBeTruthy();
 
       expect(sl.getProfileId(profile, desktop)).toBe(profileId);
