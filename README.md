@@ -1,4 +1,6 @@
 
+![minified size](https://badgen.net/bundlephobia/min/social-links) ![minified zipped size](https://badgen.net/bundlephobia/minzip/social-links) ![types](https://badgen.net/npm/types/social-links) ![license](https://badgen.net/npm/license/social-links)
+
 # Social Links
 
 Social Links is helping to validate and sanitize social (desktop & mobile) links
