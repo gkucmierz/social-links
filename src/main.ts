@@ -142,7 +142,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
         match: '(https?://)?mobile.twitter.com/@?({PROFILE_ID})/?', group: 2, type: TYPE_MOBILE,
         pattern: 'https://mobile.twitter.com/{PROFILE_ID}'
       },
-      { match: '({PROFILE_ID})', group: 1 },
+      { match: '@?({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'facebook',
