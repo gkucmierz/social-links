@@ -252,10 +252,10 @@ describe('SocialLinks', () => {
       testProfileDesktop(profile, profileId, desktop);
     });
 
-    it('should dribbble', () => {
-      const profile = 'dribbble';
+    it('should dribble', () => {
+      const profile = 'dribble';
       const profileId = 'gkucmierz';
-      const desktop = `https://dribbble.com/${profileId}`;
+      const desktop = `https://dribble.com/${profileId}`;
       testProfileDesktop(profile, profileId, desktop);
     });
 
