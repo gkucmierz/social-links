@@ -10,6 +10,10 @@ Social Links is helping to validate and sanitize social (desktop & mobile) links
 npm i social-links --save
 ```
 
+### Demo
+
+https://awesome-web-tools.web.app/social-links - Example use case
+
 ### Using
 ```js
 import { SocialLinks, TYPE_MOBILE } from 'social-links';
