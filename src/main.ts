@@ -1,4 +1,9 @@
 
+import { PROFILES } from './profiles/';
+import { TYPE_DESKTOP, TYPE_MOBILE, TYPE_DEFAULT } from './types';
+export { TYPE_DESKTOP, TYPE_MOBILE, TYPE_DEFAULT };
+// export * from './types';
+
 export interface ProfileMatch {
   match: string;
   group: number;
@@ -29,10 +34,6 @@ const findIndex = (
   ): number => {
   return (matches ?? []).findIndex(({ match }) => createRegexp(match, config).test(link));
 };
-
-export const TYPE_DESKTOP = 0;
-export const TYPE_MOBILE = 1;
-const TYPE_DEFAULT = Infinity;
 
 export interface Config {
   usePredefinedProfiles?: boolean;
@@ -116,9 +117,14 @@ export class SocialLinks {
   hasProfile(profileName: string): boolean {
     return this.profiles.has(profileName);
   }
+
+  getPre(): Profile[] {
+    return PREDEFINED_PROFILES;
+  }
 }
 
 export const PREDEFINED_PROFILES: Profile[] = [
+  ...PROFILES,
   { name: 'linkedin',
     matches: [
       {
@@ -130,19 +136,6 @@ export const PREDEFINED_PROFILES: Profile[] = [
         pattern: 'https://linkedin.com/mwlite/in/{PROFILE_ID}'
       },
       { match: '({PROFILE_ID})', group: 1 },
-    ]
-  },
-  { name: 'twitter',
-    matches: [
-      {
-        match: '(https?://)?(www.)?twitter.com/@?({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
-        pattern: 'https://twitter.com/{PROFILE_ID}'
-      },
-      {
-        match: '(https?://)?mobile.twitter.com/@?({PROFILE_ID})/?', group: 2, type: TYPE_MOBILE,
-        pattern: 'https://mobile.twitter.com/{PROFILE_ID}'
-      },
-      { match: '@?({PROFILE_ID})', group: 1 },
     ]
   },
   { name: 'facebook',
