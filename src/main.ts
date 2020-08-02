@@ -1,8 +1,8 @@
 
-import { PROFILES } from './profiles/';
+import { PREDEFINED_PROFILES } from './profiles/';
+export { PREDEFINED_PROFILES };
 import { TYPE_DESKTOP, TYPE_MOBILE, TYPE_DEFAULT } from './types';
-export { TYPE_DESKTOP, TYPE_MOBILE, TYPE_DEFAULT };
-// export * from './types';
+export * from './types';
 
 export interface ProfileMatch {
   match: string;
@@ -118,7 +118,3 @@ export class SocialLinks {
     return this.profiles.has(profileName);
   }
 }
-
-export const PREDEFINED_PROFILES: Profile[] = [
-  ...PROFILES,
-];

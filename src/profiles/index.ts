@@ -6,8 +6,8 @@ const files = fs.readdirSync(__dirname)
   .filter((name: string) => !name.endsWith('.spec.ts'))
   .filter((name: string) => name !== 'index.ts');
 
-export const PROFILES: Profile[] = [];
+export const PREDEFINED_PROFILES: Profile[] = [];
 files.map((file: string) => {
   const [ profile ] = Object.values(require([__dirname, file].join('/'))) as Profile[];
-  PROFILES.push(profile);
+  PREDEFINED_PROFILES.push(profile);
 });
