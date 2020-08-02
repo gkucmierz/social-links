@@ -4,6 +4,7 @@ import { Profile } from '../main';
 import { behance } from './behance';
 import { dev_to } from './dev_to';
 import { dribble } from './dribble';
+import { exercism } from './exercism';
 import { facebook } from './facebook';
 import { github } from './github';
 import { instagram } from './instagram';
@@ -19,6 +20,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   behance,
   dev_to,
   dribble,
+  exercism,
   facebook,
   github,
   instagram,
