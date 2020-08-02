@@ -8,7 +8,7 @@
     "lib/**/*"
   ],
   "scripts": {
-    "start": "nodemon --ignore './lib' --ignore './scripts' --exec 'npm run build && true'",
+    "start": "nodemon --ignore './lib' --exec 'npm run build && true'",
     "build": "npm run clean && tsc",
     "clean": "rimraf ./lib",
     "prepare": "npm run build",
