@@ -2,7 +2,7 @@
 import { TYPE_DESKTOP, TYPE_MOBILE } from '../types';
 
 export const facebook = {
-name: 'facebook',
+  name: 'facebook',
   matches: [
     {
       match: '(https?://)?(www.)?facebook.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
