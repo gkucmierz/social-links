@@ -5,12 +5,39 @@ const EXAMPLE_PROFILE = path(DIR, 'example_profile.ts.template');
 const EXAMPLE_SPEC_PROFILE = path(DIR, 'example_profile.spec.ts.template');
 const DESTINATION_DIR = path(DIR, '..', 'src', 'profiles');
 const PACKAGE_JSON = path(DIR, '..', 'package.json');
+const PROFILES_DIR = path(DIR, '..', 'src', 'profiles');
+const INDEX_FILE_NAME = 'index.ts';
+const IMPORT_PROFILES_FILE = path(PROFILES_DIR, INDEX_FILE_NAME);
+const SPEC_FILE_EXTENSION = '.spec.ts';
 
 const createFileFromTpl = (profile: string, source: string, dest: string) => {
   const fs = require('fs');
   const tpl = fs.readFileSync(source).toString();
   const tsFile = tpl.replace(/%%profile%%/g, profile);
   fs.writeFileSync(path(DESTINATION_DIR, `${dest}`), tsFile);
+};
+
+const createImportProfilesFile = () => {
+  const fs = require('fs');
+  const files = fs.readdirSync(PROFILES_DIR)
+    .filter((name: string) => !name.endsWith(SPEC_FILE_EXTENSION))
+    .filter((name: string) => name !== INDEX_FILE_NAME)
+    .map((file: string) => file.split('.').shift());
+
+  const nl = '\n';
+  const outputFile = [
+    '',
+    `import { Profile } from '../main';`,
+    '',
+    files.map((name: string) => `import { ${name} } from './${name}';`).join('\n'),
+    '',
+    `export const PREDEFINED_PROFILES: Profile[] = [`,
+    files.map((name: string) => `  ${name},`).join(nl),
+    `];`,
+    '',
+  ].join(nl);
+
+  fs.writeFileSync(IMPORT_PROFILES_FILE, outputFile);
 };
 
 const addPackageKeyword = (profile: string) => {
@@ -27,6 +54,7 @@ const addProfile = (profile: string) => {
   createFileFromTpl(profile, EXAMPLE_PROFILE, `${profile}.ts`);
   createFileFromTpl(profile, EXAMPLE_SPEC_PROFILE, `${profile}.spec.ts`);
   addPackageKeyword(profile);
+  createImportProfilesFile();
   console.log(`modified: package.json`);
   console.log(`   added: src/profiles/${profile}.ts`);
   console.log(`   added: src/profiles/${profile}.spec.ts`);
