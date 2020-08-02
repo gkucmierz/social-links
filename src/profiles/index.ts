@@ -7,6 +7,7 @@ import { dribble } from './dribble';
 import { facebook } from './facebook';
 import { github } from './github';
 import { instagram } from './instagram';
+import { keybase } from './keybase';
 import { linkedin } from './linkedin';
 import { medium } from './medium';
 import { patreon } from './patreon';
@@ -21,6 +22,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   facebook,
   github,
   instagram,
+  keybase,
   linkedin,
   medium,
   patreon,

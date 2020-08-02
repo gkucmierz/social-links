@@ -1,7 +1,7 @@
 
 import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE } from '../main';
 
-describe('PROFILE: dev_to', () => {
+describe('PROFILE: keybase', () => {
   let sl: SocialLinks;
 
   beforeEach(() => {
@@ -40,10 +40,10 @@ describe('PROFILE: dev_to', () => {
     expect(sl.sanitize(profile, desktop, TYPE_DESKTOP)).toBe(desktop);
   };
 
-  it('should dev_to', () => {
-    const profile = 'dev_to';
+  it('should keybase', () => {
+    const profile = 'keybase';
     const profileId = 'gkucmierz';
-    const desktop = `https://dev.to/${profileId}`;
+    const desktop = `https://keybase.io/${profileId}`;
     testProfileDesktop(profile, profileId, desktop);
   });
 });
