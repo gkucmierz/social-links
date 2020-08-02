@@ -50,7 +50,7 @@ const addPackageKeyword = (profile: string) => {
 };
 
 const addProfile = (profile: string) => {
-  if (!profile.match(/^[a-z][a-z0-9]{2,49}$/)) throw new Error('Profile name should be lowercased string matching /^[a-z][a-z0-9]{2,49}$/')
+  if (!profile.match(/^[a-z][a-z0-9_]{2,49}$/)) throw new Error('Profile name should be lowercased string matching /^[a-z][a-z0-9_]{2,49}$/')
   createFileFromTpl(profile, EXAMPLE_PROFILE, `${profile}.ts`);
   createFileFromTpl(profile, EXAMPLE_SPEC_PROFILE, `${profile}.spec.ts`);
   addPackageKeyword(profile);
