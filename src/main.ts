@@ -117,10 +117,6 @@ export class SocialLinks {
   hasProfile(profileName: string): boolean {
     return this.profiles.has(profileName);
   }
-
-  getPre(): Profile[] {
-    return PREDEFINED_PROFILES;
-  }
 }
 
 export const PREDEFINED_PROFILES: Profile[] = [
