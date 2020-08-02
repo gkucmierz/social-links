@@ -121,15 +121,6 @@ export class SocialLinks {
 
 export const PREDEFINED_PROFILES: Profile[] = [
   ...PROFILES,
-  { name: 'github',
-    matches: [
-      {
-        match: '(https?://)?(www.)?github.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
-        pattern: 'https://github.com/{PROFILE_ID}'
-      },
-      { match: '({PROFILE_ID})', group: 1 },
-    ]
-  },
   { name: 'medium',
     matches: [
       {
