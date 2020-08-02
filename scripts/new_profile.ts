@@ -56,6 +56,7 @@ const addProfile = (profile: string) => {
   addPackageKeyword(profile);
   createImportProfilesFile();
   console.log(`modified: package.json`);
+  console.log(`modified: src/profiles/index.ts`);
   console.log(`   added: src/profiles/${profile}.ts`);
   console.log(`   added: src/profiles/${profile}.spec.ts`);
 };
