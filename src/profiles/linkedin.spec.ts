@@ -1,7 +1,7 @@
 
 import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE } from '../main';
 
-describe('PROFILE: twitter', () => {
+describe('PROFILE: linkedin', () => {
   let sl: SocialLinks;
 
   beforeEach(() => {
