@@ -118,4 +118,8 @@ export class SocialLinks {
   hasProfile(profileName: string): boolean {
     return this.profiles.has(profileName);
   }
+
+  getProfileNames(): Array<string> {
+    return [...this.profiles.keys()];
+  }
 }

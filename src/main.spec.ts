@@ -149,6 +149,16 @@ describe('SocialLinks', () => {
     });
   });
 
+  describe('getProfileNames', () => {
+    it('should correctly return profiles names', () => {
+      sl = new SocialLinks({ usePredefinedProfiles: false });
+      const testProfile = 'test_profile';
+      expect(sl.getProfileNames()).toStrictEqual([]);
+      sl.addProfile(testProfile, []);
+      expect(sl.getProfileNames()).toStrictEqual([testProfile]);
+    });
+  });
+
   describe('config', () => {
     describe('usePredefinedProfiles', () => {
       it('should set usePredefinedProfiles = true', () => {
