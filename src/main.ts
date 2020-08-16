@@ -19,10 +19,11 @@ export interface Profile {
 const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
 const QUERY_PARAM = '(\\?.*)?';
 
-const createRegexp = (match: string, config: Config): RegExp => {
-  const str = match.replace('{PROFILE_ID}', `${PROFILE_ID}`);
+const createRegexp = (profileMatch: ProfileMatch, config: Config): RegExp => {
+  const str = profileMatch.match.replace('{PROFILE_ID}', `${PROFILE_ID}`);
+  const isTyped = typeof profileMatch.type !== 'undefined';
   const regexp = new RegExp([
-    '^', str, ...(config.allowQueryParams ? [QUERY_PARAM] : []), '$'
+    '^', str, ...(config.allowQueryParams && isTyped ? [QUERY_PARAM] : []), '$'
   ].join(''));
   return regexp;
 };
@@ -32,7 +33,7 @@ const findIndex = (
   link: string,
   config: Config
   ): number => {
-  return (matches ?? []).findIndex(({ match }) => createRegexp(match, config).test(link));
+  return (matches ?? []).findIndex(match => createRegexp(match, config).test(link));
 };
 
 export interface Config {
@@ -90,7 +91,7 @@ export class SocialLinks {
     const trimmed = this.trim(link);
     const idx = findIndex(matches, trimmed, this.config);
     if (idx === -1) throw new Error(`Link has not matched with profile ${profileName}`);
-    return (trimmed.match(createRegexp(matches[idx].match, this.config)) ?? [])[matches[idx].group];
+    return (trimmed.match(createRegexp(matches[idx], this.config)) ?? [])[matches[idx].group];
   }
 
   getLink(profileName: string, id: string, type = TYPE_DEFAULT): string {
