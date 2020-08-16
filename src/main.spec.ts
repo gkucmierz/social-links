@@ -212,6 +212,12 @@ describe('SocialLinks', () => {
         const params = '?param=123&param2=abc';
         expect(() => sl.sanitize('linkedin', `http://www.linkedin.com/in/gkucmierz${params}`)).toThrowError();
       });
+
+      it('should not use allowQueryParams when only profileId is provided', () => {
+        sl = new SocialLinks({ allowQueryParams: true });
+        const params = '?param=123&param2=abc';
+        expect(() => sl.sanitize('linkedin', `gkucmierz${params}`)).toThrowError();
+      });
     });
   });
 
