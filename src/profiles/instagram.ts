@@ -12,6 +12,6 @@ export const instagram = {
       match: '(https?://)?m.instagram.com/({PROFILE_ID})/?', group: 2, type: TYPE_MOBILE,
       pattern: 'https://m.instagram.com/{PROFILE_ID}'
     },
-    { match: '({PROFILE_ID})', group: 1 },
+    { match: '@?({PROFILE_ID})', group: 1 },
   ]
 };
