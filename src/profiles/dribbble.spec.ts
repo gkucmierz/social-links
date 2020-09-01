@@ -1,7 +1,7 @@
 
 import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE } from '../main';
 
-describe('PROFILE: dribble', () => {
+describe('PROFILE: dribbble', () => {
   let sl: SocialLinks;
 
   beforeEach(() => {
@@ -40,10 +40,10 @@ describe('PROFILE: dribble', () => {
     expect(sl.sanitize(profile, desktop, TYPE_DESKTOP)).toBe(desktop);
   };
 
-  it('should dribble', () => {
-    const profile = 'dribble';
+  it('should dribbble', () => {
+    const profile = 'dribbble';
     const profileId = 'gkucmierz';
-    const desktop = `https://dribble.com/${profileId}`;
+    const desktop = `https://dribbble.com/${profileId}`;
     testProfileDesktop(profile, profileId, desktop);
   });
 });

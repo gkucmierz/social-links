@@ -3,7 +3,7 @@ import { Profile } from '../main';
 
 import { behance } from './behance';
 import { dev_to } from './dev_to';
-import { dribble } from './dribble';
+import { dribbble } from './dribbble';
 import { exercism } from './exercism';
 import { facebook } from './facebook';
 import { github } from './github';
@@ -19,7 +19,7 @@ import { youtube } from './youtube';
 export const PREDEFINED_PROFILES: Profile[] = [
   behance,
   dev_to,
-  dribble,
+  dribbble,
   exercism,
   facebook,
   github,
