@@ -5,7 +5,7 @@ export const %%profile%% = {
   name: '%%profile%%',
   matches: [
     {
-      match: '(https?://)?(www.)?%%profile%%.com/?({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
+      match: '(https?://)?(www.)?%%profile%%.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
       pattern: 'https://%%profile%%.com/{PROFILE_ID}'
     },
     {
