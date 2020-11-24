@@ -85,3 +85,7 @@ or
 ```bash
 npm run test:watch
 ```
+
+### Contributing
+
+[CONTRIBUTING.md](CONTRIBUTING.md)
