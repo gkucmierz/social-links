@@ -51,9 +51,9 @@ const linkedinProfile: Profile =
 import { SocialLinks, Profile } from 'social-links';
 
 const socialLinks = new SocialLinks();
-const profile: Profile = { ... };
+const profileMatches: ProfileMatch[] = [ ... ];
 
-socialLinks.addProfile('profileName', profile);
+socialLinks.addProfile('profileName', profileMatches);
 ```
 
 ### Configuration
