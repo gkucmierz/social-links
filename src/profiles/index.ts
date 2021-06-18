@@ -1,7 +1,6 @@
 
 import { Profile } from '../main';
 
-import { aa } from './aa';
 import { behance } from './behance';
 import { dev_to } from './dev_to';
 import { dribbble } from './dribbble';
@@ -23,7 +22,6 @@ import { vk } from './vk';
 import { youtube } from './youtube';
 
 export const PREDEFINED_PROFILES: Profile[] = [
-  aa,
   behance,
   dev_to,
   dribbble,
