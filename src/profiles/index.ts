@@ -14,9 +14,11 @@ import { medium } from './medium';
 import { patreon } from './patreon';
 import { stackoverflow } from './stackoverflow';
 import { substack } from './substack';
+import { telegram } from './telegram';
 import { tiktok } from './tiktok';
 import { twitch } from './twitch';
 import { twitter } from './twitter';
+import { vk } from './vk';
 import { youtube } from './youtube';
 
 export const PREDEFINED_PROFILES: Profile[] = [
@@ -33,8 +35,10 @@ export const PREDEFINED_PROFILES: Profile[] = [
   patreon,
   stackoverflow,
   substack,
+  telegram,
   tiktok,
   twitch,
   twitter,
+  vk,
   youtube,
 ];
