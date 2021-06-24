@@ -1,5 +1,5 @@
 
-import { TYPE_DESKTOP, TYPE_MOBILE } from '../types';
+import { TYPE_DESKTOP } from '../types';
 
 export const pinterest = {
   name: 'pinterest',
