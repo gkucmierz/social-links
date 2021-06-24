@@ -12,6 +12,7 @@ import { keybase } from './keybase';
 import { linkedin } from './linkedin';
 import { medium } from './medium';
 import { patreon } from './patreon';
+import { pinterest } from './pinterest';
 import { stackoverflow } from './stackoverflow';
 import { substack } from './substack';
 import { telegram } from './telegram';
@@ -33,6 +34,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   linkedin,
   medium,
   patreon,
+  pinterest,
   stackoverflow,
   substack,
   telegram,
