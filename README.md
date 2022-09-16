@@ -1,5 +1,5 @@
 
-![minified size](https://badgen.net/bundlephobia/min/social-links) ![minified zipped size](https://badgen.net/bundlephobia/minzip/social-links) ![types](https://badgen.net/npm/types/social-links) ![license](https://badgen.net/npm/license/social-links)
+![minified size](https://badgen.net/bundlephobia/min/social-links) ![minified zipped size](https://badgen.net/bundlephobia/minzip/social-links) ![types](https://badgen.net/npm/types/social-links) ![license](https://badgen.net/npm/license/social-links) [![npm-publish](https://github.com/gkucmierz/social-links/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/gkucmierz/social-links/actions/workflows/npm-publish.yml)
 
 # Social Links
 
