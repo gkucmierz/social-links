@@ -1,6 +1,4 @@
-
 import { Profile } from '../main';
-
 import { behance } from './behance';
 import { dev_to } from './dev_to';
 import { dribbble } from './dribbble';
@@ -12,6 +10,8 @@ import { keybase } from './keybase';
 import { linkedin } from './linkedin';
 import { medium } from './medium';
 import { patreon } from './patreon';
+import { soundcloud } from './soundcloud';
+import { spotify } from './spotify';
 import { stackoverflow } from './stackoverflow';
 import { substack } from './substack';
 import { telegram } from './telegram';
@@ -33,6 +33,8 @@ export const PREDEFINED_PROFILES: Profile[] = [
   linkedin,
   medium,
   patreon,
+  soundcloud,
+  spotify,
   stackoverflow,
   substack,
   telegram,
