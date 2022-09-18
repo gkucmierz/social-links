@@ -5,7 +5,7 @@ export const pinterest = {
   name: 'pinterest',
   matches: [
     {
-      match: '(https?://)?(www.)?pinterest.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
+      match: '(https?://)?([a-z]{1,3}.)?pinterest.com/({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
       pattern: 'https://pinterest.com/{PROFILE_ID}'
     },
     { match: '@?({PROFILE_ID})', group: 1 },

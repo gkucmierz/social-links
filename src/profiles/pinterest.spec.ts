@@ -28,4 +28,25 @@ describe('PROFILE: pinterest', () => {
     const desktop = `https://pinterest.com/${profileId}`;
     testProfileDesktop(profile, profileId, desktop);
   });
+
+  it('should work with cc subdomain', () => {
+    const profile = 'pinterest';
+    const profileId = 'gkucmierz';
+    const desktop = `https://pl.pinterest.com/${profileId}`;
+    expect(sl.isValid(profile, desktop)).toBeTruthy();
+  });
+
+  it(`should work with 'www' subdomain`, () => {
+    const profile = 'pinterest';
+    const profileId = 'gkucmierz';
+    const desktop = `https://www.pinterest.com/${profileId}`;
+    expect(sl.isValid(profile, desktop)).toBeTruthy();
+  });
+
+  it(`should not work with more than 3 characters subdomain`, () => {
+    const profile = 'pinterest';
+    const profileId = 'gkucmierz';
+    const desktop = `https://abcd.pinterest.com/${profileId}`;
+    expect(sl.isValid(profile, desktop)).toBeFalsy();
+  });
 });
