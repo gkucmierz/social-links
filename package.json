@@ -26,6 +26,9 @@
     "type": "git",
     "url": "git+https://github.com/gkucmierz/social-links.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "keywords": [
     "behance",
     "dev_to",
