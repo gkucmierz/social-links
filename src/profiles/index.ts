@@ -10,6 +10,7 @@ import { keybase } from './keybase';
 import { linkedin } from './linkedin';
 import { medium } from './medium';
 import { patreon } from './patreon';
+import { pinterest } from './pinterest';
 import { soundcloud } from './soundcloud';
 import { spotify } from './spotify';
 import { stackoverflow } from './stackoverflow';
@@ -33,6 +34,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   linkedin,
   medium,
   patreon,
+  pinterest,
   soundcloud,
   spotify,
   stackoverflow,
