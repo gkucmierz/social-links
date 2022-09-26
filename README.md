@@ -20,11 +20,11 @@ import { SocialLinks, TYPE_MOBILE } from 'social-links';
 const socialLinks = new SocialLinks();
 
 const link = 'http://www.linkedin.com/in/gkucmierz';
-console.log(socialLinks.isValid('linkedin', link)); // true
+const profileName = socialLinks.detectProfile(link);
 
-console.log(socialLinks.sanitize('linkedin', link)); // 'https://linkedin.com/in/gkucmierz'
-
-console.log(socialLinks.sanitize('linkedin', link, TYPE_MOBILE)); // 'https://linkedin.com/mwlite/in/gkucmierz'
+console.log(socialLinks.isValid(profileName, link)); // true
+console.log(socialLinks.sanitize(profileName, link)); // 'https://linkedin.com/in/gkucmierz'
+console.log(socialLinks.sanitize(profileName, link, TYPE_MOBILE)); // 'https://linkedin.com/mwlite/in/gkucmierz'
 ```
 
 Above examples works based on predefined **linkedin** profile:
