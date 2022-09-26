@@ -20,7 +20,7 @@ import { SocialLinks, TYPE_MOBILE } from 'social-links';
 const socialLinks = new SocialLinks();
 
 const link = 'http://www.linkedin.com/in/gkucmierz';
-const profileName = socialLinks.detectProfile(link);
+const profileName = socialLinks.detectProfile(link); // 'linkedin'
 
 console.log(socialLinks.isValid(profileName, link)); // true
 console.log(socialLinks.sanitize(profileName, link)); // 'https://linkedin.com/in/gkucmierz'
