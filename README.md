@@ -3,7 +3,7 @@
 
 # Social Links
 
-Social Links is helping to validate and sanitize social (desktop & mobile) links
+Social Links is helping to detect, validate and sanitize social (desktop & mobile) links
 
 ### Install
 ```bash
