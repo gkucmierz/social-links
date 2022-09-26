@@ -245,4 +245,26 @@ describe('SocialLinks', () => {
     });
   });
 
+  describe('detectProfile', () => {
+    it('should detect github profiles', () => {
+      expect(sl.detectProfile('https://github.com/gkucmierz')).toEqual('github');
+      expect(sl.detectProfile('http://github.com/abc')).toEqual('github');
+      expect(sl.detectProfile('github.com/abc')).toEqual('github');
+      expect(sl.detectProfile('www.github.com/gkucmierz')).toEqual('github');
+    });
+
+    it('should detect different profiles', () => {
+      expect(sl.detectProfile('https://exercism.io/profiles/gkucmierz')).toEqual('exercism');
+      expect(sl.detectProfile('https://dev.to/gkucmierz')).toEqual('dev_to');
+      expect(sl.detectProfile('https://youtube.com/channel/gkucmierz')).toEqual('youtube');
+      expect(sl.detectProfile('https://linkedin.com/in/gkucmierz')).toEqual('linkedin');
+      expect(sl.detectProfile('https://medium.com/@gkucmierz')).toEqual('medium');
+    });
+
+    it('should return empty string if no match', () => {
+      expect(sl.detectProfile('https://www.codewars.com/kata/my-languages')).toEqual('');
+      expect(sl.detectProfile('')).toEqual('');
+    });
+  });
+
 });
