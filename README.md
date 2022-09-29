@@ -12,8 +12,8 @@ npm i social-links --save
 
 ### Demo
 
-https://awesome-web-tools.web.app/social-links - Example use case
-https://gkucmierz.github.io/social-links-app - Detect profile demo (v1.7.0)
+- https://awesome-web-tools.web.app/social-links - Example use case
+- https://gkucmierz.github.io/social-links-app - Detect profile demo (v1.7.0)
 
 ### Using
 ```js
