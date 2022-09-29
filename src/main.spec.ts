@@ -1,5 +1,6 @@
 
-import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE, Profile } from './main';
+import SocialLinks from './main';
+import { TYPE_DESKTOP, TYPE_MOBILE, Profile } from './main';
 
 describe('SocialLinks', () => {
   let sl: SocialLinks;

@@ -148,3 +148,5 @@ export class SocialLinks {
     return scores[0].profileName;
   }
 }
+
+export default SocialLinks;
