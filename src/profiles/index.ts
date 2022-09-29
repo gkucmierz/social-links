@@ -1,4 +1,6 @@
+
 import { Profile } from '../main';
+
 import { behance } from './behance';
 import { dev_to } from './dev_to';
 import { dribbble } from './dribbble';
@@ -8,6 +10,7 @@ import { github } from './github';
 import { instagram } from './instagram';
 import { keybase } from './keybase';
 import { linkedin } from './linkedin';
+import { linktree } from './linktree';
 import { medium } from './medium';
 import { patreon } from './patreon';
 import { pinterest } from './pinterest';
@@ -32,6 +35,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   instagram,
   keybase,
   linkedin,
+  linktree,
   medium,
   patreon,
   pinterest,
