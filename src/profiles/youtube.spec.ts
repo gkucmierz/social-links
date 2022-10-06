@@ -8,43 +8,27 @@ describe('PROFILE: youtube', () => {
     sl = new SocialLinks();
   });
 
-  const testProfile = (profile: string, profileId: string, desktop: string, mobile: string) => {
+  const testProfile = (profile: string, profileId: string, given: string, expected: string) => {
     expect(sl.hasProfile(profile)).toBeTruthy();
 
-    expect(sl.isValid(profile, desktop)).toBeTruthy();
-    expect(sl.isValid(profile, mobile)).toBeTruthy();
+    expect(sl.isValid(profile, given)).toBeTruthy();
 
-    expect(sl.getProfileId(profile, desktop)).toBe(profileId);
-    expect(sl.getProfileId(profile, mobile)).toBe(profileId);
+    expect(sl.getProfileId(profile, given)).toBe(profileId);
 
-    expect(sl.getLink(profile, profileId)).toBe(desktop);
-    expect(sl.getLink(profile, profileId, TYPE_DESKTOP)).toBe(desktop);
-    expect(sl.getLink(profile, profileId, TYPE_MOBILE)).toBe(mobile);
+    expect(sl.getLink(profile, profileId)).toBe(expected);
+    expect(sl.getLink(profile, profileId, TYPE_DESKTOP)).toBe(expected);
 
-    expect(sl.sanitize(profile, desktop)).toBe(desktop);
-    expect(sl.sanitize(profile, desktop, TYPE_DESKTOP)).toBe(desktop);
-    expect(sl.sanitize(profile, mobile, TYPE_MOBILE)).toBe(mobile);
-  };
-
-  const testProfileDesktop = (profile: string, profileId: string, desktop: string) => {
-    expect(sl.hasProfile(profile)).toBeTruthy();
-
-    expect(sl.isValid(profile, desktop)).toBeTruthy();
-
-    expect(sl.getProfileId(profile, desktop)).toBe(profileId);
-
-    expect(sl.getLink(profile, profileId)).toBe(desktop);
-    expect(sl.getLink(profile, profileId, TYPE_DESKTOP)).toBe(desktop);
-
-    expect(sl.sanitize(profile, desktop)).toBe(desktop);
-    expect(sl.sanitize(profile, desktop, TYPE_DESKTOP)).toBe(desktop);
+    expect(sl.sanitize(profile, given)).toBe(expected);
+    expect(sl.sanitize(profile, given, TYPE_DESKTOP)).toBe(expected);
   };
 
   it('should youtube', () => {
     const profile = 'youtube';
-    const profileId = 'UCpHGx5iSfXZ-7AicGd6IZtg';
-    const desktop = `https://youtube.com/channel/${profileId}`;
-    const mobile = `https://m.youtube.com/c/${profileId}`;
-    testProfile(profile, profileId, desktop, mobile);
+    const profileId = 'gkucmierz';
+    const oldChannel = `https://youtube.com/channel/${profileId}`;
+    const user = `https://youtube.com/user/${profileId}`;
+
+    testProfile(profile, profileId, oldChannel, user);
+    testProfile(profile, profileId, user, user);
   });
 });
