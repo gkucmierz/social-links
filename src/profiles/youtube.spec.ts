@@ -22,13 +22,17 @@ describe('PROFILE: youtube', () => {
     expect(sl.sanitize(profile, given, TYPE_DESKTOP)).toBe(expected);
   };
 
-  it('should youtube', () => {
+  it('should work with /@user', () => {
     const profile = 'youtube';
     const profileId = 'gkucmierz';
-    const oldChannel = `https://youtube.com/channel/${profileId}`;
-    const user = `https://youtube.com/user/${profileId}`;
 
-    testProfile(profile, profileId, oldChannel, user);
-    testProfile(profile, profileId, user, user);
+    const curr = `https://youtube.com/@${profileId}`;
+    const old = [
+      `https://youtube.com/channel/${profileId}`,
+      `https://youtube.com/user/${profileId}`,
+      curr,
+    ];
+
+    old.map(url => testProfile(profile, profileId, url, curr));
   });
 });
