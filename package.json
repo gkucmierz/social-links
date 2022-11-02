@@ -14,7 +14,8 @@
     "prepare": "npm run build",
     "test": "jest --no-cache ./*",
     "test:watch": "jest --no-cache --watch ./*",
-    "new": "ts-node scripts/new_profile"
+    "new": "ts-node scripts/new_profile",
+    "watch": "npm run test:watch"
   },
   "husky": {
     "hooks": {
