@@ -5,6 +5,10 @@ export const twitter = {
   name: 'twitter',
   matches: [
     {
+      match: '(https?://)?(www.)?twitter.com/i/user/@?({PROFILE_ID})/?', group: 2, type: TYPE_DESKTOP,
+      pattern: 'https://twitter.com/i/user/{PROFILE_ID}'
+    },
+    {
       match: '(https?://)?(www.)?twitter.com/@?({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
       pattern: 'https://twitter.com/{PROFILE_ID}'
     },
