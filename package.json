@@ -80,7 +80,7 @@
     "command-line-args": "^5.1.1",
     "command-line-usage": "^6.1.0",
     "edit-json-file": "^1.4.0",
-    "husky": "^4.2.5",
+    "husky": "^8.0.3",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
     "rimraf": "^3.0.2",
