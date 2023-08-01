@@ -17,6 +17,7 @@ jobs:
       - run: npm i
       - run: npm run restrict-publish
       - run: npm test
+      - run: npm build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
