@@ -16,7 +16,7 @@
     "test:watch": "jest --no-cache --watch ./*",
     "new": "ts-node scripts/new_profile",
     "watch": "npm run test:watch",
-    "restrict-publish": "node scripts/restrict-commit-name.tsw"
+    "restrict-publish": "node scripts/restrict-commit-name.ts"
   },
   "husky": {
     "hooks": {
