@@ -1,6 +1,6 @@
 {
   "name": "social-links",
-  "version": "1.13.7",
+  "version": "1.13.8",
   "description": "Validate & sanitize social links",
   "main": "lib/main.js",
   "types": "lib/main.d.ts",
