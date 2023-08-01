@@ -1,5 +1,6 @@
 
-import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE, Profile } from './main';
+import SocialLinks from './main';
+import { TYPE_DESKTOP, TYPE_MOBILE, Profile } from './main';
 
 describe('SocialLinks', () => {
   let sl: SocialLinks;
@@ -242,6 +243,28 @@ describe('SocialLinks', () => {
       sl.addProfile(name, [{ match: '(.{3})', group: 1, pattern: '-{PROFILE_ID}-' }]);
       expect(sl.isValid(name, '123')).toBeTruthy();
       expect(sl.sanitize(name, '123')).toBe('-123-');
+    });
+  });
+
+  describe('detectProfile', () => {
+    it('should detect github profiles', () => {
+      expect(sl.detectProfile('https://github.com/gkucmierz')).toEqual('github');
+      expect(sl.detectProfile('http://github.com/abc')).toEqual('github');
+      expect(sl.detectProfile('github.com/abc')).toEqual('github');
+      expect(sl.detectProfile('www.github.com/gkucmierz')).toEqual('github');
+    });
+
+    it('should detect different profiles', () => {
+      expect(sl.detectProfile('https://exercism.io/profiles/gkucmierz')).toEqual('exercism');
+      expect(sl.detectProfile('https://dev.to/gkucmierz')).toEqual('dev_to');
+      expect(sl.detectProfile('https://youtube.com/channel/gkucmierz')).toEqual('youtube');
+      expect(sl.detectProfile('https://linkedin.com/in/gkucmierz')).toEqual('linkedin');
+      expect(sl.detectProfile('https://medium.com/@gkucmierz')).toEqual('medium');
+    });
+
+    it('should return empty string if no match', () => {
+      expect(sl.detectProfile('https://www.codewars.com/kata/my-languages')).toEqual('');
+      expect(sl.detectProfile('')).toEqual('');
     });
   });
 

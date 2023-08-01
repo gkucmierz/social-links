@@ -1,9 +1,9 @@
 
-![minified size](https://badgen.net/bundlephobia/min/social-links) ![minified zipped size](https://badgen.net/bundlephobia/minzip/social-links) ![types](https://badgen.net/npm/types/social-links) ![license](https://badgen.net/npm/license/social-links)
+![minified size](https://badgen.net/bundlephobia/min/social-links) ![minified zipped size](https://badgen.net/bundlephobia/minzip/social-links) ![types](https://badgen.net/npm/types/social-links) ![license](https://badgen.net/npm/license/social-links) [![npm-publish](https://github.com/gkucmierz/social-links/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/gkucmierz/social-links/actions/workflows/npm-publish.yml)
 
 # Social Links
 
-Social Links is helping to validate and sanitize social (desktop & mobile) links
+Social Links is helping to detect, validate and sanitize social (desktop & mobile) links
 
 ### Install
 ```bash
@@ -12,7 +12,8 @@ npm i social-links --save
 
 ### Demo
 
-https://awesome-web-tools.web.app/social-links - Example use case
+- https://awesome-web-tools.web.app/social-links - Example use case
+- https://gkucmierz.github.io/social-links-app - Detect profile demo (v1.7.0)
 
 ### Using
 ```js
@@ -20,11 +21,11 @@ import { SocialLinks, TYPE_MOBILE } from 'social-links';
 const socialLinks = new SocialLinks();
 
 const link = 'http://www.linkedin.com/in/gkucmierz';
-console.log(socialLinks.isValid('linkedin', link)); // true
+const profileName = socialLinks.detectProfile(link); // 'linkedin'
 
-console.log(socialLinks.sanitize('linkedin', link)); // 'https://linkedin.com/in/gkucmierz'
-
-console.log(socialLinks.sanitize('linkedin', link, TYPE_MOBILE)); // 'https://linkedin.com/mwlite/in/gkucmierz'
+console.log(socialLinks.isValid(profileName, link)); // true
+console.log(socialLinks.sanitize(profileName, link)); // 'https://linkedin.com/in/gkucmierz'
+console.log(socialLinks.sanitize(profileName, link, TYPE_MOBILE)); // 'https://linkedin.com/mwlite/in/gkucmierz'
 ```
 
 Above examples works based on predefined **linkedin** profile:

@@ -16,6 +16,11 @@ export interface Profile {
   matches: ProfileMatch[];
 }
 
+export interface Score {
+  profileName: string;
+  score: number;
+}
+
 const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
 const QUERY_PARAM = '(\\?.*)?';
 
@@ -122,4 +127,26 @@ export class SocialLinks {
   getProfileNames(): Array<string> {
     return [...this.profiles.keys()];
   }
+
+  // list all matching profiles sorted by score
+  scoreProfiles(link: string): Array<Score> {
+    return this.getProfileNames().map(profileName => {
+      const matches = this.profiles.get(profileName);
+      const score = (matches || []).reduce((sum, match): number => {
+        return sum + (createRegexp(match, this.config).test(link) ? 1 : 0);
+      }, 0);
+      return { profileName, score };
+    })
+      .filter(obj => obj.score > 0)
+      .sort((a, b) => b.score - a.score);
+  }
+
+  // return first matching profile
+  detectProfile(link: string): string {
+    const scores = this.scoreProfiles(link);
+    if (scores.length === 0) return '';
+    return scores[0].profileName;
+  }
 }
+
+export default SocialLinks;

@@ -1,6 +1,6 @@
 {
   "name": "social-links",
-  "version": "1.4.5",
+  "version": "1.10.0",
   "description": "Validate & sanitize social links",
   "main": "lib/main.js",
   "types": "lib/main.d.ts",
@@ -14,7 +14,8 @@
     "prepare": "npm run build",
     "test": "jest --no-cache ./*",
     "test:watch": "jest --no-cache --watch ./*",
-    "new": "ts-node scripts/new_profile"
+    "new": "ts-node scripts/new_profile",
+    "watch": "npm run test:watch"
   },
   "husky": {
     "hooks": {
@@ -39,10 +40,12 @@
     "keybase",
     "linkedin",
     "links",
+    "linktree",
     "manipulation",
     "media",
     "medium",
     "patreon",
+    "pinterest",
     "regex",
     "regexp",
     "regular",
