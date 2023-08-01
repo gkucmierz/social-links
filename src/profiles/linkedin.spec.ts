@@ -47,4 +47,12 @@ describe('PROFILE: linkedin', () => {
     const mobile = `https://linkedin.com/mwlite/in/${profileId}`;
     testProfile(profile, profileId, desktop, mobile);
   });
+
+  it('should accept localized urls', () => {
+    const profile = 'linkedin';
+    expect(sl.isValid(profile, 'https://de.linkedin.com/in/anton-begehr/')).toBeTruthy();
+    expect(sl.isValid(profile, 'https://de.linkedin.com/mwlite/in/anton-begehr/')).toBeTruthy();
+    expect(sl.sanitize(profile, 'https://de.linkedin.com/in/anton-begehr/')).toBe('https://linkedin.com/in/anton-begehr');
+    expect(sl.sanitize(profile, 'https://de.linkedin.com/mwlite/in/anton-begehr/', TYPE_MOBILE)).toBe('https://linkedin.com/mwlite/in/anton-begehr');
+  });
 });
