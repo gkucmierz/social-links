@@ -9,6 +9,7 @@ import { facebook } from './facebook';
 import { github } from './github';
 import { instagram } from './instagram';
 import { keybase } from './keybase';
+import { lemmy_world } from './lemmy_world';
 import { linkedin } from './linkedin';
 import { linktree } from './linktree';
 import { medium } from './medium';
@@ -34,6 +35,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   github,
   instagram,
   keybase,
+  lemmy_world,
   linkedin,
   linktree,
   medium,
