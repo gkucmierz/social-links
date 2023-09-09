@@ -28,6 +28,6 @@ describe('PROFILE: lemmy_world', () => {
 
   it('should not lemmy_world invalid wariations', () => {
     expect(sl.isValid(profile, `www.lemmy.world/u/${profileId}`)).toBeFalsy();
-    expect(sl.isValid(profile, `http://www/lemmy.world/u/${profileId}`)).toBeFalsy();
+    expect(sl.isValid(profile, `http://www.lemmy.world/u/${profileId}`)).toBeFalsy();
   });
 });
