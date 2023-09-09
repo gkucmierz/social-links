@@ -19,21 +19,24 @@ describe('PROFILE: mastodon', () => {
     expect(sl.getLink(profile, profileId, TYPE_DESKTOP)).toBe(desktop);
   });
 
+  const checkMastodonMatches = (domain: string, profileId: string) => {
+    expect(sl.isValid(profile, `https://${domain}/@${profileId}`)).toBeTruthy();
+    expect(sl.isValid(profile, `http://${domain}/@${profileId}`)).toBeTruthy();
+    expect(sl.isValid(profile, `${domain}/@${profileId}/`)).toBeTruthy();
+    expect(sl.isValid(profile, `http://${domain}/@${profileId}/`)).toBeTruthy();
+    expect(sl.isValid(profile, `www.${domain}/@${profileId}`)).toBeTruthy();
+    expect(sl.isValid(profile, `http://www.${domain}/@${profileId}`)).toBeTruthy();
+  };
+
   it('should mastodon.social valid wariations', () => {
-    expect(sl.isValid(profile, `https://mastodon.social/@${profileId}`)).toBeTruthy();
-    expect(sl.isValid(profile, `http://mastodon.social/@${profileId}`)).toBeTruthy();
-    expect(sl.isValid(profile, `mastodon.social/@${profileId}/`)).toBeTruthy();
-    expect(sl.isValid(profile, `http://mastodon.social/@${profileId}/`)).toBeTruthy();
-    expect(sl.isValid(profile, `www.mastodon.social/@${profileId}`)).toBeTruthy();
-    expect(sl.isValid(profile, `http://www.mastodon.social/@${profileId}`)).toBeTruthy();
+    checkMastodonMatches('mastodon.social', profileId);
   });
 
   it('should mstdn.social valid wariations', () => {
-    expect(sl.isValid(profile, `https://mstdn.social/@${profileId}`)).toBeTruthy();
-    expect(sl.isValid(profile, `http://mstdn.social/@${profileId}`)).toBeTruthy();
-    expect(sl.isValid(profile, `mstdn.social/@${profileId}/`)).toBeTruthy();
-    expect(sl.isValid(profile, `http://mstdn.social/@${profileId}/`)).toBeTruthy();
-    expect(sl.isValid(profile, `www.mstdn.social/@${profileId}`)).toBeTruthy();
-    expect(sl.isValid(profile, `http://www.mstdn.social/@${profileId}`)).toBeTruthy();
+    checkMastodonMatches('mstdn.social', profileId);
+  });
+  
+  it('should mastodon.world valid wariations', () => {
+    checkMastodonMatches('mastodon.world', profileId);
   });
 });
