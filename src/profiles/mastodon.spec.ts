@@ -27,4 +27,13 @@ describe('PROFILE: mastodon', () => {
     expect(sl.isValid(profile, `www.mastodon.social/@${profileId}`)).toBeTruthy();
     expect(sl.isValid(profile, `http://www.mastodon.social/@${profileId}`)).toBeTruthy();
   });
+
+  it('should mstdn.social valid wariations', () => {
+    expect(sl.isValid(profile, `https://mstdn.social/@${profileId}`)).toBeTruthy();
+    expect(sl.isValid(profile, `http://mstdn.social/@${profileId}`)).toBeTruthy();
+    expect(sl.isValid(profile, `mstdn.social/@${profileId}/`)).toBeTruthy();
+    expect(sl.isValid(profile, `http://mstdn.social/@${profileId}/`)).toBeTruthy();
+    expect(sl.isValid(profile, `www.mstdn.social/@${profileId}`)).toBeTruthy();
+    expect(sl.isValid(profile, `http://www.mstdn.social/@${profileId}`)).toBeTruthy();
+  });
 });
