@@ -12,6 +12,7 @@ import { keybase } from './keybase';
 import { lemmy_world } from './lemmy_world';
 import { linkedin } from './linkedin';
 import { linktree } from './linktree';
+import { mastodon } from './mastodon';
 import { medium } from './medium';
 import { patreon } from './patreon';
 import { pinterest } from './pinterest';
@@ -38,6 +39,7 @@ export const PREDEFINED_PROFILES: Profile[] = [
   lemmy_world,
   linkedin,
   linktree,
+  mastodon,
   medium,
   patreon,
   pinterest,
