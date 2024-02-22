@@ -3,9 +3,11 @@ import { SocialLinks, TYPE_DESKTOP, TYPE_MOBILE } from '../main';
 
 describe('PROFILE: youtube', () => {
   let sl: SocialLinks;
+  let lax_sl: SocialLinks;
 
   beforeEach(() => {
     sl = new SocialLinks();
+    lax_sl = new SocialLinks({ strict: false });
   });
 
   const testProfile = (profile: string, profileId: string, given: string, expected: string) => {
@@ -35,4 +37,14 @@ describe('PROFILE: youtube', () => {
 
     old.map(url => testProfile(profile, profileId, url, curr));
   });
+
+  it('can parse less strictly', () => {
+  const profile = 'youtube';
+    const profileId = 'gkucmierz';
+
+    const expectedUrl = `https://youtube.com/@${profileId}`;
+    const urlWithExtras = `https://youtube.com/user/${profileId}/videos`;
+
+    expect(lax_sl.sanitize(profile, urlWithExtras)).toBe(expectedUrl);
+  })
 });

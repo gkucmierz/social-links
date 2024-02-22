@@ -5,7 +5,7 @@ export const youtube =  {
   name: 'youtube',
   matches: [
     {
-      match: '(https?://)?(www.)?youtube.com/@?({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
+      match: '(https?://)?(www.)?youtube.com/@({PROFILE_ID})/?', group: 3, type: TYPE_DESKTOP,
       pattern: 'https://youtube.com/@{PROFILE_ID}'
     },
     {
