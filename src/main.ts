@@ -25,7 +25,8 @@ const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
 const QUERY_PARAM = '(\\?.*)?';
 
 const createRegexp = (profileMatch: ProfileMatch, config: Config): RegExp => {
-  const str = profileMatch.match.replace('{PROFILE_ID}', `${PROFILE_ID}`);
+  const str = config.strict ? profileMatch.match.replace('{PROFILE_ID}', `${PROFILE_ID}`) :profileMatch.match.replace('{PROFILE_ID}', `${PROFILE_ID}`).replace(/\/\?/, '/.*')
+
   const isTyped = typeof profileMatch.type !== 'undefined';
   const regexp = new RegExp([
     '^', str, ...(config.allowQueryParams && isTyped ? [QUERY_PARAM] : []), '$'
@@ -45,12 +46,14 @@ export interface Config {
   usePredefinedProfiles?: boolean;
   trimInput?: boolean;
   allowQueryParams?: boolean;
+  strict?: boolean;
 }
 
 export const DEFAULT_CONFIG: Config = {
   usePredefinedProfiles: true,
   trimInput: true,
   allowQueryParams: false,
+  strict: true
 };
 
 export class SocialLinks {
