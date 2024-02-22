@@ -21,7 +21,7 @@ export interface Score {
   score: number;
 }
 
-const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
+const PROFILE_ID = '[A-Za-z0-9_\\-\\.%]+';
 const QUERY_PARAM = '(\\?.*)?';
 
 const createRegexp = (profileMatch: ProfileMatch, config: Config): RegExp => {
