@@ -22,10 +22,12 @@ export interface Score {
 }
 
 const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
+const PROFILE_ID_DIACRITICS = '[Ç-ūA-Za-z0-9_\\-\\.]+';
 const QUERY_PARAM = '(\\?.*)?';
 
 const createRegexp = (profileMatch: ProfileMatch, config: Config): RegExp => {
-  const str = profileMatch.match.replace('{PROFILE_ID}', `${PROFILE_ID}`);
+  const profileId = config.allowDiactricits ? PROFILE_ID_DIACRITICS : PROFILE_ID
+  const str = profileMatch.match.replace('{PROFILE_ID}', `${profileId}`);
   const isTyped = typeof profileMatch.type !== 'undefined';
   const regexp = new RegExp([
     '^', str, ...(config.allowQueryParams && isTyped ? [QUERY_PARAM] : []), '$'
@@ -45,12 +47,14 @@ export interface Config {
   usePredefinedProfiles?: boolean;
   trimInput?: boolean;
   allowQueryParams?: boolean;
+  allowDiactricits?: boolean;
 }
 
 export const DEFAULT_CONFIG: Config = {
   usePredefinedProfiles: true,
   trimInput: true,
   allowQueryParams: false,
+  allowDiactricits: false
 };
 
 export class SocialLinks {
