@@ -23,7 +23,7 @@ import { substack } from './substack';
 import { telegram } from './telegram';
 import { tiktok } from './tiktok';
 import { twitch } from './twitch';
-import { twitter } from './twitter';
+import { twitter } from './x';
 import { vk } from './vk';
 import { youtube } from './youtube';
 

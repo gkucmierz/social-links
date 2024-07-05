@@ -40,11 +40,11 @@ describe('PROFILE: twitter', () => {
     expect(sl.sanitize(profile, desktop, TYPE_DESKTOP)).toBe(desktop);
   };
 
-  it('should linkedin', () => {
-    const profile = 'linkedin';
+  it('should x', () => {
+    const profile = 'x';
     const profileId = 'gkucmierz';
-    const desktop = `https://linkedin.com/in/${profileId}`;
-    const mobile = `https://linkedin.com/mwlite/in/${profileId}`;
+    const desktop = `https://x.com/${profileId}`;
+    const mobile = `https://x.com/${profileId}`;
     testProfile(profile, profileId, desktop, mobile);
   });
 });
