@@ -25,6 +25,7 @@ import { tiktok } from './tiktok';
 import { twitch } from './twitch';
 import { twitter } from './twitter';
 import { vk } from './vk';
+import { x } from './x';
 import { youtube } from './youtube';
 
 export const PREDEFINED_PROFILES: Profile[] = [
@@ -52,5 +53,6 @@ export const PREDEFINED_PROFILES: Profile[] = [
   twitch,
   twitter,
   vk,
+  x,
   youtube,
 ];

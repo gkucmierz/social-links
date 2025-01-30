@@ -9,7 +9,7 @@ const PROFILES_DIR = path(DIR, '..', 'src', 'profiles');
 const INDEX_FILE_NAME = 'index.ts';
 const IMPORT_PROFILES_FILE = path(PROFILES_DIR, INDEX_FILE_NAME);
 const SPEC_FILE_EXTENSION = '.spec.ts';
-const PROFILE_NAME_REGEX = /^[a-z][a-z0-9_]{1,49}$/;
+const PROFILE_NAME_REGEX = /^[a-z0-9_]{1,49}$/;
 
 const createFileFromTpl = (profile: string, source: string, dest: string) => {
   const fs = require('fs');
@@ -52,7 +52,7 @@ const addPackageKeyword = (profile: string) => {
 
 const addProfile = (profile: string) => {
   if (!PROFILE_NAME_REGEX.test(profile)) {
-    throw new Error(`Profile name should be lowercased string matching ${PROFILE_NAME_REGEX} (2-50 characters)`);
+    throw new Error(`Profile name should be lowercased string matching ${PROFILE_NAME_REGEX} (1-50 characters)`);
   }
   createFileFromTpl(profile, EXAMPLE_PROFILE, `${profile}.ts`);
   createFileFromTpl(profile, EXAMPLE_SPEC_PROFILE, `${profile}.spec.ts`);
