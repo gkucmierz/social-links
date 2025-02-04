@@ -13,5 +13,11 @@ export const linkedin = {
       pattern: 'https://linkedin.com/mwlite/in/{PROFILE_ID}'
     },
     { match: '({PROFILE_ID})', group: 1 },
+    {
+			match: '(https?://)?([a-z]{2,3}.)?linkedin.com/company/({PROFILE_ID})/?',
+			group: 3,
+			type: TYPE_DESKTOP,
+			pattern: 'https://linkedin.com/company/{PROFILE_ID}',
+		}
   ]
 };
