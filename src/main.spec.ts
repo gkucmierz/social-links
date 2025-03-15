@@ -230,6 +230,23 @@ describe('SocialLinks', () => {
         expect(() => sl.sanitize('linkedin', `gkucmierz${params}`)).toThrowError();
       });
     });
+
+    describe('allowDiactricits', () => {
+      it('should be invalid a link with tilde', () => {
+        sl = new SocialLinks({ allowDiactricits: false });
+        expect(sl.isValid('linkedin', 'https://www.linkedin.com/in/josé-test')).toBeFalsy();
+      })
+
+      it('should be valid a link with tilde', () => {
+        sl = new SocialLinks({ allowDiactricits: true });
+        expect(sl.isValid('linkedin', 'https://www.linkedin.com/in/josé-test')).toBeTruthy();
+      })
+
+      it('should be valid a link with ö', () => {
+        sl = new SocialLinks({ allowDiactricits: true });
+        expect(sl.isValid('linkedin', 'https://www.linkedin.com/in/jösé-test')).toBeTruthy();
+      })
+    })
   });
 
   describe('profiles', () => {
