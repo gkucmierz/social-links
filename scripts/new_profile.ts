@@ -1,25 +1,24 @@
+import fs from 'fs';
+import path from 'path';
 
-const path = (...args: string[]) => args.join('/');
 const DIR = __dirname;
-const EXAMPLE_PROFILE = path(DIR, 'example_profile.ts.template');
-const EXAMPLE_SPEC_PROFILE = path(DIR, 'example_profile.spec.ts.template');
-const DESTINATION_DIR = path(DIR, '..', 'src', 'profiles');
-const PACKAGE_JSON = path(DIR, '..', 'package.json');
-const PROFILES_DIR = path(DIR, '..', 'src', 'profiles');
+const EXAMPLE_PROFILE = path.join(DIR, 'example_profile.ts.template');
+const EXAMPLE_SPEC_PROFILE = path.join(DIR, 'example_profile.spec.ts.template');
+const DESTINATION_DIR = path.join(DIR, '..', 'src', 'profiles');
+const PACKAGE_JSON = path.join(DIR, '..', 'package.json');
+const PROFILES_DIR = path.join(DIR, '..', 'src', 'profiles');
 const INDEX_FILE_NAME = 'index.ts';
-const IMPORT_PROFILES_FILE = path(PROFILES_DIR, INDEX_FILE_NAME);
+const IMPORT_PROFILES_FILE = path.join(PROFILES_DIR, INDEX_FILE_NAME);
 const SPEC_FILE_EXTENSION = '.spec.ts';
 const PROFILE_NAME_REGEX = /^[a-z0-9_]{1,49}$/;
 
 const createFileFromTpl = (profile: string, source: string, dest: string) => {
-  const fs = require('fs');
-  const tpl = fs.readFileSync(source).toString();
+  const tpl = fs.readFileSync(source, 'utf8');
   const tsFile = tpl.replace(/%%profile%%/g, profile);
-  fs.writeFileSync(path(DESTINATION_DIR, `${dest}`), tsFile);
+  fs.writeFileSync(path.join(DESTINATION_DIR, dest), tsFile);
 };
 
 const createImportProfilesFile = () => {
-  const fs = require('fs');
   const files = fs.readdirSync(PROFILES_DIR)
     .filter((name: string) => !name.endsWith(SPEC_FILE_EXTENSION))
     .filter((name: string) => name !== INDEX_FILE_NAME)
@@ -42,12 +41,10 @@ const createImportProfilesFile = () => {
 };
 
 const addPackageKeyword = (profile: string) => {
-  const fs = require('fs');
-  const editJsonFile = require('edit-json-file');
-  const file = editJsonFile(PACKAGE_JSON);
-  const keywords: Set<string> = new Set([...file.get('keywords') as string[], profile].sort());
-  [...keywords].map((keyword, i) => file.set('keywords.' + i, keyword));
-  file.save();
+  const pkg = JSON.parse(fs.readFileSync(PACKAGE_JSON, 'utf8'));
+  const keywords = Array.from(new Set([...(pkg.keywords || []), profile])).sort();
+  pkg.keywords = keywords;
+  fs.writeFileSync(PACKAGE_JSON, JSON.stringify(pkg, null, 2) + '\n');
 };
 
 const addProfile = (profile: string) => {
@@ -65,44 +62,14 @@ const addProfile = (profile: string) => {
 };
 
 const showHelp = () => {
-  const commandLineUsage = require('command-line-usage');
-
-  const optionDefinitions = [
-    {
-      name: 'help',
-      description: 'Display this usage guide.',
-      alias: 'h',
-      type: Boolean
-    },
-  ];
-
-  const sections = [
-    {
-      header: 'Add new Profile',
-      content: '$ npm run new <profile>',
-    },
-    // {
-    //   header: 'Options',
-    //   optionList: optionDefinitions
-    // },
-  ];
-
-  const usage = commandLineUsage(sections);
-  console.log(usage);
+  console.log('\nAdd new Profile:\n  $ npm run new <profile>\n');
 };
 
-const commandLineArgs = require('command-line-args');
+const args = process.argv.slice(2);
+const profiles = args.filter((a) => !a.startsWith('-'));
 
-const optionDefinitions = [
-  { name: 'help', alias: 'h', type: Boolean },
-  { name: 'profiles', type: String, multiple: true, defaultOption: true },
-];
-
-const options = commandLineArgs(optionDefinitions);
-
-const { profiles } = options;
-if (profiles) {
-  profiles.map((profile: string) => addProfile(profile));
+if (profiles.length > 0 && !args.includes('-h') && !args.includes('--help')) {
+  profiles.forEach((profile: string) => addProfile(profile));
 } else {
   showHelp();
 }
