@@ -21,7 +21,7 @@ export interface Score {
   score: number;
 }
 
-const PROFILE_ID = '[A-Za-z0-9_\\-\\.]+';
+const PROFILE_ID = '[A-Za-z0-9_\\-\\.\\%\\u0080-\\uFFFF]+';
 const QUERY_PARAM = '(\\?.*)?';
 
 const createRegexp = (profileMatch: ProfileMatch, config: Config): RegExp => {
@@ -116,7 +116,10 @@ export class SocialLinks {
     const profileId = this.getProfileId(profileName, trimmed);
     const matches = this.profiles.get(profileName) ?? [];
     const idx = findIndex(matches, trimmed, this.config);
-    const matchedType = type !== TYPE_DEFAULT ? type : (matches[idx].type ?? TYPE_DEFAULT);
+    if (type === TYPE_DEFAULT && matches[idx] && matches[idx].pattern) {
+      return (matches[idx].pattern ?? '').replace('{PROFILE_ID}', `${this.trim(profileId)}`);
+    }
+    const matchedType = type !== TYPE_DEFAULT ? type : (matches[idx]?.type ?? TYPE_DEFAULT);
     return this.getLink(profileName, profileId, matchedType);
   }
 
