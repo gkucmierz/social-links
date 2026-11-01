@@ -48,3 +48,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Local AI Agent Rules & Code Recipes (Never Commit)
+code-recipes
+.agents
+.agent
+AGENTS.md
+agents.md

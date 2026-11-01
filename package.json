@@ -1,6 +1,6 @@
 {
   "name": "social-links",
-  "version": "1.15.1",
+  "version": "1.16.0",
   "description": "Validate & sanitize social links",
   "main": "lib/main.js",
   "types": "lib/main.d.ts",
@@ -8,8 +8,11 @@
     "lib/**/*"
   ],
   "scripts": {
+    "dev": "vite --port 20104 --host",
     "start": "tsc -w",
     "build": "npm run clean && tsc",
+    "build:ui": "vite build",
+    "preview": "vite preview --port 20104 --host",
     "clean": "node -e 'fs.rmSync(\"./lib\",{recursive:true,force:true})'",
     "prepare": "npm run build && git config core.hooksPath .githooks || true",
     "test": "node -r ./scripts/test-setup.js -r ts-node/register/transpile-only --test 'src/**/*.spec.ts'",
@@ -68,14 +71,18 @@
     "youtube"
   ],
   "author": "Grzegorz Kucmierz",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/gkucmierz/social-links/issues"
   },
-  "homepage": "https://github.com/gkucmierz/social-links#readme",
+  "homepage": "https://social-links.7u.pl",
   "devDependencies": {
+    "@gkucmierz/nano-ui": "^1.8.0",
+    "@vitejs/plugin-vue": "^5.2.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
-  },
-  "private": true
+    "typescript": "^5.1.6",
+    "vite": "^6.2.0",
+    "vue": "^3.5.13",
+    "vue-url-cleaner": "^1.0.0"
+  }
 }

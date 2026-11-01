@@ -1,0 +1,94 @@
+name: Deploy Studio SPA & Publish Package (Gitea + NPM)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy-studio:
+    name: Deploy Studio SPA (social-links.7u.pl)
+    runs-on: self-hosted-pl
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Zero-downtime Docker build & deployment
+        run: |
+          docker compose build
+          docker compose up -d --remove-orphans
+
+  publish:
+    name: Test, Sanitize & Dual-Publish Package (Gitea + NPM)
+    runs-on: self-hosted-pl
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies, build library & run unit tests
+        run: |
+          npm install
+          npm run build
+          npm test
+
+      - name: Publish to Internal Registry (Gitea Packages + Auto-Link)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.LOCAL_PACKAGE_REGISTRY || secrets.GITEA_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$NODE_AUTH_TOKEN" ]; then
+            echo "⚠️ LOCAL_PACKAGE_REGISTRY is not set, skipping Gitea Packages publish."
+            exit 0
+          fi
+          TMP_NPMRC=$(mktemp)
+          trap 'rm -f "$TMP_NPMRC"' EXIT
+          NAME=$(node -p "require('./package.json').name")
+          VER=$(node -p "require('./package.json').version")
+          REG="https://gitea.7u.pl/api/packages/gkucmierz/npm/"
+          printf "@gkucmierz:registry=%s\nregistry=%s\n//gitea.7u.pl/api/packages/gkucmierz/npm/:_authToken=%s\nalways-auth=true\n" "$REG" "$REG" "$NODE_AUTH_TOKEN" > "$TMP_NPMRC"
+          if NPM_CONFIG_USERCONFIG="$TMP_NPMRC" npm view "${NAME}@${VER}" --registry="$REG" version >/dev/null 2>&1; then
+            echo "ℹ️ ${NAME}@${VER} already published to Gitea Packages — skipping upload."
+          else
+            NPM_CONFIG_USERCONFIG="$TMP_NPMRC" npm publish --registry="$REG" || echo "ℹ️ Gitea Packages publish skipped."
+          fi
+          node -e '
+          (async () => {
+            const token = process.env.NODE_AUTH_TOKEN || "";
+            if (!token) return;
+            const url = "https://gitea.7u.pl/api/v1/packages/gkucmierz/npm/social-links/-/link/social-links";
+            const res = await fetch(url, { method: "POST", headers: { Authorization: `token ${token}` } });
+            console.log(`🔗 [Gitea Package Link] Linked social-links -> gkucmierz/social-links (HTTP ${res.status})`);
+          })();
+          '
+
+      - name: Publish to Public NPM Registry (Blocked if UNLICENSED or Repo Private)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          ALLOW_PUBLIC=$(node -e '
+          const fs = require("fs");
+          const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
+          const lic = String(pkg.license || "").trim().toUpperCase();
+          if (pkg.private === true || !lic || lic === "UNLICENSED" || lic === "PROPRIETARY") {
+            console.error(`🔒 [Privacy Gate] package.json declares license="${pkg.license || "NONE"}" — strictly blocking public npmjs.org publish.`);
+            console.log("BLOCK");
+            process.exit(0);
+          }
+          fetch("https://gitea.7u.pl/api/v1/repos/gkucmierz/social-links")
+            .then(r => {
+              if (r.status !== 200) {
+                console.error(`🔒 [Privacy Gate] Repository gkucmierz/social-links is PRIVATE on Gitea (HTTP ${r.status}) — strictly blocking public npmjs.org publish.`);
+                console.log("BLOCK");
+              } else {
+                console.log("ALLOW");
+              }
+            })
+            .catch(() => console.log("ALLOW"));
+          ')
+          if [ "$ALLOW_PUBLIC" != "ALLOW" ] || [ -z "$NODE_AUTH_TOKEN" ]; then
+            exit 0
+          fi
+          TMP_NPMRC=$(mktemp)
+          trap 'rm -f "$TMP_NPMRC"' EXIT
+          printf "registry=https://registry.npmjs.org/\n//registry.npmjs.org/:_authToken=%s\n" "$NODE_AUTH_TOKEN" > "$TMP_NPMRC"
+          NPM_CONFIG_USERCONFIG="$TMP_NPMRC" npm publish --registry="https://registry.npmjs.org/" --access public || echo "⚠️ Public npmjs.org publish skipped."

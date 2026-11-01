@@ -12,6 +12,7 @@ npm i social-links --save
 
 ### Demo
 
+- https://social-links.7u.pl - Interactive Studio, Regex Matrix & Custom Profile Builder
 - https://awesome-web-tools.web.app/social-links - Example use case
 - https://gkucmierz.github.io/social-links-app - Detect profile demo (v1.7.0)
 

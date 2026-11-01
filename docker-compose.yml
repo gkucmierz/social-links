@@ -1,0 +1,24 @@
+name: social-links
+
+services:
+  social-links:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: social-links
+    restart: unless-stopped
+    ports:
+      - "20104:80"
+    expose:
+      - "80"
+    networks:
+      npm_public:
+        aliases:
+          - social-links
+          - links
+          - social
+
+networks:
+  npm_public:
+    external: true
+    name: npm_public
