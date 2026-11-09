@@ -72,6 +72,9 @@
   ],
   "author": "Grzegorz Kucmierz",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "bugs": {
     "url": "https://github.com/gkucmierz/social-links/issues"
   },
