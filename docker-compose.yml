@@ -6,10 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: social-links
-    restart: unless-stopped
-    ports:
-      - "20104:80"
-    expose:
+    restart: unless-stopped    expose:
       - "80"
     networks:
       npm_public:
